@@ -1,0 +1,11 @@
+# keyファイルを無視
+# *.key
+
+# --------------------
+
+# READMEと.devcontainer/だけを追跡する。
+*
+!/.devcontainer/
+!/.git/
+!/README.md
+!/.gitignore
