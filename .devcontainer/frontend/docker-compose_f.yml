@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: .devcontainer/frontend/Dockerfile
+    volumes:
+      - ./frontend:/usr/src/app
+    command: yarn dev
+    ports:
+      - "3000:3000"

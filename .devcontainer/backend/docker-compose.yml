@@ -1,0 +1,63 @@
+version: "3"
+
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: .devcontainer/frontend/Dockerfile
+    volumes:
+      - ./frontend:/usr/src/app
+    command: yarn dev
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  backend:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: .devcontainer/backend/Dockerfile
+    volumes:
+      # - type: bind
+      #   source: ./backend
+      #   target: /app:rw
+      - ./backend:/app:rw
+    environment:
+      TZ: Asia/Tokyo
+      RAILS_ENV: development
+    ports:
+      - "3001:3000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14.3-alpine
+    container_name: postgres
+    environment:
+      - TZ=Asia/Tokyo
+      - PGTZ=Asia/Tokyo
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - type: bind
+        source: ./db/data
+        target: /var/lib/postgresql/data:rw
+    ports:
+      - "5432:5432"
+
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    ports:
+      - 8081:8080
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - ADMINER_SERVER=db
+      - ADMINER_DRIVER=pgsql
+      - ADMINER_DB=${DB_NAME:-db}
+      - ADMINER_USERNAME=${DB_USER:-postgres}
+      - ADMINER_PASSWORD=${DB_PASSWORD:-postgres}
+      - ADMINER_NAME=ADMINER for PostgreSQL DB

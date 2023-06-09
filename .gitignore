@@ -4,7 +4,7 @@
 # --------------------
 
 # READMEと.devcontainer/だけを追跡する。
-*
+/*
 !/.devcontainer/
 !/.git/
 !/README.md
