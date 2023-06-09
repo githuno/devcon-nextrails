@@ -1,12 +1,12 @@
 ## 環境構築
 1.git Clone
-git clone 
+`git clone`
 
 2.ディレクトリ移動
-cd Next_rails/
+`cd dev_next-rails/`
 
 3.スクリプト実行
-./.devcontainer/create.sh
+`./.devcontainer/create.sh`
 
 ## 最新リポジトリ反映
 
@@ -21,12 +21,12 @@ https://computer-tb.co.jp/2022/06/22/nginxnext-jsrailspostgresql%E3%82%92%E4%BD%
 -----------------
 
 削除
-sudo rm -rf frontend/ backend/ docker* db/
-docker compose -p "myproject" stop
-docker system prune -a --volumes
+`sudo rm -rf frontend/ backend/ docker* db/`
+`docker compose -p "myproject" stop`
+`docker system prune -a --volumes`
 
 起動
-docker compose -p myproject up -d 
+`docker compose -p myproject up -d`
 
 
 ### Adminerについて

@@ -10,7 +10,7 @@ services:
       - ./frontend:/usr/src/app
     command: yarn dev
     ports:
-      - "3000:3000"
+      - "3001:3000"
     depends_on:
       - backend
 
@@ -28,7 +28,7 @@ services:
       TZ: Asia/Tokyo
       RAILS_ENV: development
     ports:
-      - "3001:3000"
+      - "3002:3000"
     depends_on:
       - db
 
@@ -44,7 +44,7 @@ services:
         source: ./db/data
         target: /var/lib/postgresql/data:rw
     ports:
-      - "5432:5432"
+      - "5433:5432"
 
   adminer:
     image: adminer:latest
