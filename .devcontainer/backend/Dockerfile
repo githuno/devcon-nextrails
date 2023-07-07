@@ -43,4 +43,4 @@ RUN gem update
 
 ENTRYPOINT ["entrypoint.sh"]
 
-CMD ["rails", "server", "-e"]
+# CMD ["rails", "server", "-e"]

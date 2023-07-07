@@ -20,6 +20,11 @@ Ok to proceed? (y)
 ✔ Would you like to customize the default import alias? … <u>**No**</u> / Yes
 Creating a new Next.js app in /usr/src/app.
 
+4.server起動確認
+attach vscode 
+frontend : `yarn dev`
+backend : `rails s`
+
 ## 2.最新リポジトリ反映
 
 1.[.git]削除（環境構築用のgitを削除）

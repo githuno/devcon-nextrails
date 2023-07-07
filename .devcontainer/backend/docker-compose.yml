@@ -9,7 +9,7 @@ services:
       dockerfile: .devcontainer/frontend/Dockerfile
     volumes:
       - ./frontend:/usr/src/app
-    command: yarn dev
+    # command: yarn dev
     ports:
       - "3001:3000"
     depends_on:
@@ -28,6 +28,7 @@ services:
     environment:
       TZ: Asia/Tokyo
       RAILS_ENV: development
+    # command: rails server -e
     ports:
       - "3002:3000"
     depends_on:
