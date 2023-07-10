@@ -2,7 +2,7 @@
 0.docker構築
 
 1.git Clone
-`git clone`
+`git clone https://github.com/githuno/dev_next-rails.git Next-rails`
 
 2.ディレクトリ移動
 `cd dev_next-rails/`
