@@ -53,7 +53,7 @@ services:
     container_name: adminer
     ports:
       - 8081:8080
-    restart: always
+    # restart: always
     depends_on:
       - db
     environment:
