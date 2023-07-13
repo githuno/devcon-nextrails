@@ -6,8 +6,14 @@ services:
     build:
       context: .
       dockerfile: .devcontainer/frontend/Dockerfile
+      args:
+        APP_PATH: ${APP_PATH}
     volumes:
-      - ./frontend:/usr/src/app
-    # command: yarn dev
+      - ./frontend:${APP_PATH}
+    # command: yarn dev #OK
+    # command: dumb-init yarn run #OK
+    # command: dumb-init node /root/container.js #NG
+    command: /bin/sh
+    tty: true
     ports:
       - "3001:3000"

@@ -1,42 +1,109 @@
 #!/bin/sh
-# 任意のプロジェクトネームをセット(大文字は禁止っぽい)
-export PNAME="myproject"
 
-# 1.nextアプリ用のファイル群生成（インストール中なにか聞かれたらyまたはenterでデフォルト設定のまま進める）
+# 任意のプロジェクトネームをセット(大文字は禁止っぽい)
+export PNAME=myproject
+export APP_PATH=/app
+
+# -----------------------0.envファイル作成-------------------------------------|
+if [ ! -f ".env" ]; then
+  # envファイル作成
+    # https://qiita.com/shun_xx/items/5608e553a16d94afacd2
+  # Dockerにおける各ファイル間での環境変数の渡し方
+    # https://blog.cloud-acct.com/posts/u-env-docker-compose/
+    # https://qiita.com/KEINOS/items/518610bc2fdf5999acf2
+  cat <<EOT > .env
+LOCALUID=`id -u`
+LOCALUNAME=`id -un`
+LOCALGID=`id -g`
+LOCALGNAME=`id -gn`
+PNAME=${PNAME}
+APP_PATH=${APP_PATH}
+EOT
+fi
+# -----------------------------------------------------------------------------------------|
+
+
+# -----------------------1.nextアプリ用のファイル群生成--------------------------------------|
 if [ ! -d "frontend" ]; then
   # 1-1.必要なファイルを配置
   mkdir frontend
   cp .devcontainer/frontend/docker-compose_f.yml .
   # 1-2.nextアプリファイル群生成
-  docker compose -f docker-compose_f.yml -p $PNAME run --rm frontend npx create-next-app .
-fi
+  docker compose -f docker-compose_f.yml -p ${PNAME} run --rm frontend \
+  npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
+  
+# 参考「create-next-appで訊かれていること」： https://zenn.dev/ikkik/articles/51d97ff70bd0da 
+# 参考「non-interactive」：https://nextjs.org/docs/pages/api-reference/create-next-app#non-interactive
+  #   Ok to proceed? (y) 
+  # ✔ Would you like to use TypeScript with this project? … No / <u>**Yes**</u>
+  # ✔ Would you like to use ESLint with this project? … No / <u>**Yes**</u>
+  # ✔ Would you like to use Tailwind CSS with this project? … No / <u>**Yes**</u>
+  # ✔ Would you like to use `src/` directory with this project? … <u>No</u> / <u>**Yes**</u>
+        # `デフォルトでは、pagesディレクトリはプロジェクトのルートに存在する必要があるのですが、
+        # これを src/pages に変更できるオプションです。デフォルトではNoになっているが、
+        # もしかしたらソースコードはsrcディレクトリの中にまとめてしまった方が、
+        # ルートがスッキリしてわかりやすくなるかもしれません。`
+  # ✔ Use App Router (recommended)? … No / <u>**Yes**</u>
+  # ✔ Would you like to customize the default import alias? … <u>**No**</u> / Yes
+  # Creating a new Next.js app in /usr/src/app.
 
-# 2.railsアプリ用のファイル群生成
+fi
+# -----------------------------------------------------------------------------------------|
+# または、.git削除したのち
+  # git clone ... frontend
+
+
+# -----------------------2.railsアプリ用のファイル群生成-------------------------------------|
 if [ ! -d "backend" ]; then
   # 2-1.設定ファイル準備
   mkdir backend
-  if [ ! -f "backend/Gemfile" ]; then
-    cp .devcontainer/backend/app/Gemfile backend/
-  fi
-  if [ ! -f "backend/Gemfile.lock" ]; then
-    cp .devcontainer/backend/app/Gemfile.lock backend/
-  fi
+  cp -f .devcontainer/backend/docker-compose.yml .
+
+  # 2-2.db設定
+  mkdir db db/data
+
+  # 2-3.railsアプリ群ビルド
+  docker compose -p ${PNAME} up -d --build
+
+# rails generate model Post title:string content:text
+# rails db:migrate
+
+# rails generate controller Api::V1::Posts index show create update destroy
 fi
+# -----------------------------------------------------------------------------------------|
+# または、
+  # git clone ... backend
+# 必要ならdataフォルダをコピー
+  # cp -f *** db/data
+
+# 3.まとめてビルド <-未検証
+# docker compose -p $PNAME up -d
+
+# CASEの書き出し
+# 1.【new create】devcon-nextrailsをクローンして新規環境作成
+# 2.【clone create】devcon-nextrailsをクローンして、（devconのgitを削除して）それぞれの元dev環境もクローンしてcompose
+# 3.【into project】devcon-nextrailsをクローンして、（devconのgitを削除して）それぞれの進行中リポジをクローンしてcompose
+
+
 
 # 3.
-if [ ! -d "db" ]; then
-  mkdir db db/data
-  cp -f .devcontainer/backend/docker-compose.yml .
-  docker compose -p $PNAME up -d --build
-  docker compose -p $PNAME stop
-  cp -f .devcontainer/backend/app/database.yml backend/config/database.yml
-  docker compose -p $PNAME up -d --build
-  # docker compose run --rm backend bundle exec rails _7.0.3_ new . -d postgresql -f
-  # # docker compose build
-  # sudo cp -f .devcontainer/backend/app/database.yml backend/config/database.yml
-  # docker compose run --rm backend rails db:create --build
-  # docker compose up -d
-fi
+# if [ ! -d "db" ]; then
+  # run new -> build -> database.yml -> up -> run db:create
+  # mkdir db db/data
+  
+  # docker compose -p $PNAME up -d --build
+  # docker compose -p $PNAME stop
+  # cp -f .devcontainer/backend/app/database.yml backend/config/database.yml
+  # docker compose -p $PNAME up -d # --build
+
+  # docker compose -p $PNAME run --rm backend bundle exec rails new . \
+  #   -d postgresql -f --api --database=postgresql --skip-git --skip-bundle
+  # docker compose -p $PNAME build
+  # cp -f .devcontainer/backend/app/database.yml backend/config/database.yml
+  # # docker compose -p $PNAME run --rm backend rails db:create --build
+  # docker compose -p $PNAME run --rm backend rails db:create
+  # docker compose -p $PNAME up -d
+# fi
   # 2-2.railsアプリファイル生成
   
   # docker compose run backend sh

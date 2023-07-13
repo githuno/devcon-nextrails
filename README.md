@@ -10,20 +10,8 @@
 3.スクリプト実行
 `./.devcontainer/create.sh`
 
-Ok to proceed? (y) 
-✔ Would you like to use TypeScript with this project? … No / <u>**Yes**</u>
-✔ Would you like to use ESLint with this project? … No / <u>**Yes**</u>
-✔ Would you like to use Tailwind CSS with this project? … No / <u>**Yes**</u>
-✔ Would you like to use `src/` directory with this project? … <u>**No**</u> / Yes
-    `デフォルトでは、pagesディレクトリはプロジェクトのルートに存在する必要があるのですが、これを src/pages に変更できるオプションです。デフォルトではNoになっているが、もしかしたらソースコードはsrcディレクトリの中にまとめてしまった方が、ルートがスッキリしてわかりやすくなるかもしれません。`
-✔ Use App Router (recommended)? … No / <u>**Yes**</u>
-✔ Would you like to customize the default import alias? … <u>**No**</u> / Yes
-Creating a new Next.js app in /usr/src/app.
-
 4.server起動確認
-attach vscode 
-frontend : `yarn dev`
-backend : `rails s`
+attach vscode
 
 ## 2.最新リポジトリ反映
 
@@ -40,16 +28,31 @@ https://computer-tb.co.jp/2022/06/22/nginxnext-jsrailspostgresql%E3%82%92%E4%BD%
 
 
 -----------------
+### サーバーの立ち上げ
+rails s -e
+yarn dev
 
-削除
-`sudo rm -rf frontend/ backend/ docker* db/`
-`docker compose -p "myproject" stop`
-`docker system prune -a --volumes`
+### bashへの切り替え
+bash
 
-起動
-`docker compose -p myproject up -d`
-
+### dbの可視化
+外部ブラウザから：  apidog ｜ postman
+外部vscodeから：   vscode拡張-> thunder Client ｜ Rapid API Client
+内部vscodeから：    PostgreSQL[https://marketplace.visualstudio.com/items?itemName=ckolkman.vscode-postgres]
+ <!-- VScodeのPostgreSQL拡張が便利:https://od10z.wordpress.com/2019/12/17/vscode-extensions-for-postgresql/ -->
+    
 
 ### Adminerについて
 https://zenn.dev/junki555/articles/13da16e4f10c9dee2bb9
 https://www.distant-view.co.jp/column/3107/
+
+### よく使うdocker系操作
+`docker system prune -a --volumes`
+`sudo docker stop $(sudo docker ps -aq)`
+`sudo rm -rf backend/ db/ frontend/ .env docker*`
+`./.devcontainer/create.sh`
+
+`docker compose -p "myproject" stop`
+`sudo systemctl stop docker`
+`sudo systemctl restart docker`
+`sudo rm -rf /var/lib/docker`

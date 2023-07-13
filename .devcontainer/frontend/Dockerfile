@@ -1,27 +1,13 @@
 FROM node:18-alpine
 
-# 環境変数の設定
-ENV APP_PATH /usr/src/app
-WORKDIR $APP_PATH
-
 # "apk add"は"apt-get install"の簡易版（alpine用）
 RUN apk update \
     && apk add \
-    git vim nano sudo bash curl
+    git vim nano sudo bash curl shadow dumb-init
+    # https://qiita.com/bricolageart/items/a509594a5b4c349e90b7
 
-RUN npm cache clean --force \
-    && npm install -g npm@latest
+COPY ./.devcontainer/.bashrc /root/
 
-SHELL ["/bin/bash", "-c"]
-# FROM node:15.8
+ARG APP_PATH
+WORKDIR ${APP_PATH}
 
-# ENV APP /usr/src/app
-# RUN mkdir $APP
-# WORKDIR $APP
-
-# COPY package.json yarn.lock $APP/
-# RUN yarn
-
-# COPY . $APP/
-
-# CMD ["yarn", "dev"]

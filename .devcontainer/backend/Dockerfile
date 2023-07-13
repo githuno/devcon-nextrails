@@ -1,21 +1,18 @@
 FROM ruby:3.1.2-alpine
 
-ENV ROOT="/app"
+# docker-compose.ymlからもらう変数
+ARG APP_PATH LOCALUID LOCALUNAME LOCALGID LOCALGNAME
+# コンテナ内に引き継ぐ変数
+ENV ROOT=${APP_PATH}
 ENV LANG=C.UTF-8
 ENV TZ=Asia/Tokyo
 
-WORKDIR ${ROOT}
-COPY ./.devcontainer/backend/app/database.yml /tmp/
+COPY ./.devcontainer/backend/app/database.yml \
+    ./.devcontainer/.bashrc \
+    ./.devcontainer/backend/app/Gemfile \
+    ./.devcontainer/backend/app/Gemfile.lock /tmp/
 COPY ./.devcontainer/backend/entrypoint.sh /usr/bin/
-COPY ./.devcontainer/backend/app/Gemfile ./.devcontainer/backend/app/Gemfile.lock ${ROOT}/
-# COPY ./.devcontainer/backend/prepare.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh 
-    # /usr/bin/prepare.sh
-
-# WORKDIR ${ROOT}
-# COPY ./.devcontainer/backend/app/Gemfile ./.devcontainer/backend/app/Gemfile.lock ${ROOT}/
-# COPY ./.devcontainer/backend/app/Gemfile ./.devcontainer/backend/app/Gemfile.lock ${ROOT}/
-# （docker-compose.yml内で）マウントしたボリュームへはペーストできない？上書きされた上で権限変更されるようだ
+RUN chmod +x /usr/bin/entrypoint.sh
 
 RUN apk update && \
     apk add \
@@ -26,21 +23,18 @@ RUN apk update && \
     tzdata \
     nodejs \
     git vim nano sudo \
-    gcompat
+    gcompat shadow bash postgresql-client
 
-# RUN /usr/bin/prepare.sh
-# RUN gem update --system --clear-sources --source 'https://rubygems.org' \
-#     && gem install bundler -v 2.3.14 --clear-sources --source 'https://rubygems.org'
-# RUN bundle _2.3.14_ config set --local without 'production' \
-#     && bundle _2.3.14_ install --no-cache
+WORKDIR ${APP_PATH}
 
-RUN gem update 
-#     && gem install bundler -v 2.3.14
-# RUN bundle _2.3.14_ install
-# RUN rails db:create
+# ユーザ切り替え
+RUN useradd --create-home ${LOCALUNAME}
+RUN chown -R ${LOCALUNAME}:${LOCALGNAME} ${APP_PATH}
+RUN chown -R ${LOCALUNAME}:${LOCALGNAME} /usr/local/bundle/
+USER ${LOCALUNAME}:${LOCALGNAME}
 
 # ADD . ${ROOT}
-
 ENTRYPOINT ["entrypoint.sh"]
 
 # CMD ["rails", "server", "-e"]
+# CMD ["rm", "-f", "${ROOT}/tmp/pids/server.pid"]

@@ -7,32 +7,44 @@ services:
     build:
       context: .
       dockerfile: .devcontainer/frontend/Dockerfile
+      args:
+        APP_PATH: ${APP_PATH}
     volumes:
-      - ./frontend:/usr/src/app
-    # command: yarn dev
+      - ./frontend:${APP_PATH}
+    # command: yarn dev #OK
+    # command: dumb-init yarn run #OK
+    # command: dumb-init node /root/container.js #NG
+    command: /bin/sh
+    tty: true
     ports:
       - "3001:3000"
-    depends_on:
-      - backend
 
   backend:
     container_name: backend
     build:
       context: .
       dockerfile: .devcontainer/backend/Dockerfile
+      args: # Dockerfileに引き継ぐ変数
+        LOCALUID: ${LOCALUID}
+        LOCALUNAME: ${LOCALUNAME}
+        LOCALGID: ${LOCALGID}
+        LOCALGNAME: ${LOCALGNAME}
+        APP_PATH: ${APP_PATH}
     volumes:
       # - type: bind
       #   source: ./backend
       #   target: /app:rw
-      - ./backend:/app:rw
-    environment:
+      - ./backend:${APP_PATH}:rw
+    environment: # コンテナ内に引き継ぐ変数
       TZ: Asia/Tokyo
       RAILS_ENV: development
     # command: rails server -e
+    command: /bin/sh
     ports:
       - "3002:3000"
     depends_on:
       - db
+    tty: true # 追記
 
   db:
     image: postgres:14.3-alpine
@@ -44,7 +56,8 @@ services:
     volumes:
       - type: bind
         source: ./db/data
-        target: /var/lib/postgresql/data:rw
+        target: /var/lib/postgresql/data 
+      # memo:https://nishinatoshiharu.com/docker-volume-tutorial/
     ports:
       - "5433:5432"
 
@@ -63,3 +76,4 @@ services:
       - ADMINER_USERNAME=${DB_USER:-postgres}
       - ADMINER_PASSWORD=${DB_PASSWORD:-postgres}
       - ADMINER_NAME=ADMINER for PostgreSQL DB
+    
