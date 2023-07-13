@@ -29,8 +29,8 @@ https://computer-tb.co.jp/2022/06/22/nginxnext-jsrailspostgresql%E3%82%92%E4%BD%
 
 -----------------
 ### サーバーの立ち上げ
-rails s -e
-yarn dev
+backend: `rails s -e`\n
+frontend: `yarn dev`\n
 
 ### bashへの切り替え
 bash
@@ -47,12 +47,12 @@ https://zenn.dev/junki555/articles/13da16e4f10c9dee2bb9
 https://www.distant-view.co.jp/column/3107/
 
 ### よく使うdocker系操作
-`docker system prune -a --volumes`
-`sudo docker stop $(sudo docker ps -aq)`
-`sudo rm -rf backend/ db/ frontend/ .env docker*`
-`./.devcontainer/create.sh`
+`docker system prune -a --volumes`\n
+`sudo docker stop $(sudo docker ps -aq)`\n
+`sudo rm -rf backend/ db/ frontend/ .env docker*`\n
+`./.devcontainer/create.sh`\n
 
-`docker compose -p "myproject" stop`
-`sudo systemctl stop docker`
-`sudo systemctl restart docker`
-`sudo rm -rf /var/lib/docker`
+`docker compose -p "myproject" stop`\n
+`sudo systemctl stop docker`\n
+`sudo systemctl restart docker`\n
+`sudo rm -rf /var/lib/docker`\n
