@@ -1,8 +1,33 @@
 #!/bin/sh
 
 # 任意のプロジェクトネームをセット(大文字は禁止っぽい)
-export PNAME=myproject
+read -p "プロジェクト名を入力してください: " PNAME
+current_folder=$(basename "$(pwd)")
 export APP_PATH=/app
+
+echo "現在の階層は $current_folder 下 です"
+read -p "ここに作成しますか? (y/N):" yn
+if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+    Pfolder="./${PNAME}"
+else
+    read -p "作成するディレクトリを指定してください" dir
+    Pfolder="${dir}/${PNAME}"
+fi
+
+if [ ! -d $Pfolder ]; then
+    mkdir $Pfolder
+fi
+
+# Pfolderに.devcontainerがなければPNAMEを作成（devconをクローン:該当フォルダが空なら同名でclone可能）
+if [ ! -d $Pfolder/.devcontainer ]; then
+    git clone https://github.com/githuno/devcon-nextrails.git $Pfolder
+else
+    read -p "${Pfolder}は既に存在しますが、続けますか? (y/N):" yn
+    if [ ! "$yn" = "y" ] && [ ! "$yn" = "Y" ]; then
+        echo "終了します"
+        exit
+    fi
+fi
 
 # -----------------------0.envファイル作成-------------------------------------|
 if [ ! -f ".env" ]; then

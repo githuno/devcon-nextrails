@@ -1,4 +1,5 @@
 #!/bin/sh
+
 read -p "プロジェクト名を入力してください: " PNAME
 current_folder=$(basename "$(pwd)")
 export APP_PATH=/app

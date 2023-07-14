@@ -9,6 +9,7 @@ RUN apk update \
 ARG APP_PATH
 WORKDIR ${APP_PATH}
 
+COPY ./.devcontainer/.bashrc /tmp/
 COPY ./.devcontainer/frontend/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 
