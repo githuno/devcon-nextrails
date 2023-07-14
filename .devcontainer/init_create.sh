@@ -30,7 +30,7 @@ else
 fi
 
 # -----------------------0.envファイル作成-------------------------------------|
-if [ ! -f ".env" ]; then
+if [ ! -f "$Pfolder/.env" ]; then
   # envファイル作成
     # https://qiita.com/shun_xx/items/5608e553a16d94afacd2
   # Dockerにおける各ファイル間での環境変数の渡し方
@@ -49,9 +49,9 @@ fi
 
 
 # -----------------------1.nextアプリ用のディレクトリ生成--------------------------------------|
-if [ ! -d "frontend" ]; then
+if [ ! -d "$Pfolder/frontend" ]; then
   # 1-1.必要なファイルを配置
-  mkdir frontend
+  mkdir ${Pfolder}/frontend
   # cp .devcontainer/frontend/docker-compose_f.yml .
   # # 1-2.nextアプリファイル群生成
   # docker compose -f docker-compose_f.yml -p ${PNAME} run --rm frontend \
@@ -62,13 +62,13 @@ fi
 
 
 # -----------------------2.railsアプリ用のディレクトリ生成-------------------------------------|
-if [ ! -d "backend" ]; then
+if [ ! -d "$Pfolder/backend" ]; then
   # 2-1.設定ファイル準備
-  mkdir backend
+  mkdir ${Pfolder}/backend
   
 
   # 2-2.db設定
-  mkdir db db/data
+  mkdir db ${Pfolder}/db/data
 
 fi
 # -----------------------------------------------------------------------------------------|
@@ -76,9 +76,8 @@ fi
   # cp -f *** db/data
 
 # 3.まとめてビルド <-未検証
-cp -f .devcontainer/backend/docker-compose.yml .
-docker compose -p ${PNAME} up -d --build
-
+cp $Pfolder/.devcontainer/backend/docker-compose.yml $Pfolder/
+docker compose -f ${Pfolder}/docker-compose.yml -p ${PNAME} up -d --build
 
 # 3.【into project】devcon-nextrailsをクローンして、（devconのgitを削除して）それぞれの進行中リポジをクローンしてcompose
   # git clone https://github.com/githuno/nextrails-back-1.git backend
