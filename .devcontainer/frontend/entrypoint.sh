@@ -15,6 +15,8 @@ if [ ! -e "next.config.js" ]; then
     env CI=true npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
     # npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
     echo '初期設定 success!!'
+    # env CI=false
+
     # 参考「create-next-appで訊かれていること」： https://zenn.dev/ikkik/articles/51d97ff70bd0da 
     # 参考「non-interactive」：https://nextjs.org/docs/pages/api-reference/create-next-app#non-interactive
         #   Ok to proceed? (y) 
