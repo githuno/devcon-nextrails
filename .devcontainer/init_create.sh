@@ -47,15 +47,15 @@ EOT
 fi
 # -----------------------------------------------------------------------------------------|
 
+cp $Pfolder/.devcontainer/backend/docker-compose.yml $Pfolder/
 
 # -----------------------1.nextアプリ用のディレクトリ生成--------------------------------------|
 if [ ! -d "$Pfolder/frontend" ]; then
   # 1-1.必要なファイルを配置
   mkdir ${Pfolder}/frontend
-  # cp .devcontainer/frontend/docker-compose_f.yml .
   # # 1-2.nextアプリファイル群生成
-  # docker compose -f docker-compose_f.yml -p ${PNAME} run --rm frontend \
-  # npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
+  docker compose -f ${Pfolder}/docker-compose.yml -p ${PNAME} run --rm front_${PNAME} \
+  npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
 
 fi
 # -----------------------------------------------------------------------------------------|
@@ -76,7 +76,6 @@ fi
   # cp -f *** db/data
 
 # 3.まとめてビルド <-未検証
-cp $Pfolder/.devcontainer/backend/docker-compose.yml $Pfolder/
 docker compose -f ${Pfolder}/docker-compose.yml -p ${PNAME} up -d --build
 
 # 3.【into project】devcon-nextrailsをクローンして、（devconのgitを削除して）それぞれの進行中リポジをクローンしてcompose
