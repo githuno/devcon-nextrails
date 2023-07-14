@@ -30,6 +30,7 @@ if [ ! -e "./config/routes.rb" ]; then
   # --skip入れないとpgのgemないってエラーが出る
   bundle install
   rails new . --force --api --database=postgresql --skip-git --skip-bundle
+  cp -f /tmp/.gitignore ${ROOT}
   cp -f /tmp/database.yml ${ROOT}/config/database.yml
   bundle install
   rails db:create
@@ -43,6 +44,9 @@ else
     bundle install
     rails db:create
     rails db:seed
+    rm -rf config/master.key # 追記（既存keyの削除）
+    EDITOR=vim rails credentials:edit # 追記（keyの新規作成）
+    # git rm -f --cached *.key # 追記（追跡除外）
     echo "インストール success!!"
 fi
 

@@ -50,9 +50,6 @@ else
         [yY]*) 
         rm -rf $Pfolder/backend
         git clone https://github.com/githuno/nextrails-ini-backend.git $Pfolder/backend
-        rm -rf config/master.key # 追記（既存keyの削除）
-        EDITOR=vim rails credentials:edit # 追記（keyの新規作成）
-        # git rm -f --cached *.key # 追記（追跡除外）
         echo "backend is initialized!!";;
             *)  ;;
     esac   

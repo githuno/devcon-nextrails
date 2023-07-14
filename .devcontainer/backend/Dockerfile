@@ -7,8 +7,9 @@ ENV ROOT=${APP_PATH}
 ENV LANG=C.UTF-8
 ENV TZ=Asia/Tokyo
 
-COPY ./.devcontainer/backend/app/database.yml \
-    ./.devcontainer/.bashrc \
+COPY ./.devcontainer/.bashrc \
+    ./.devcontainer/backend/app/database.yml \
+    ./.devcontainer/backend/app/.gitignore \
     ./.devcontainer/backend/app/Gemfile \
     ./.devcontainer/backend/app/Gemfile.lock /tmp/
 COPY ./.devcontainer/backend/entrypoint.sh /usr/bin/
