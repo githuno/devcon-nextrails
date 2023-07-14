@@ -67,6 +67,7 @@ else
             *)  ;;
     esac   
 fi
+
 cat <<EOT > $Pfolder/.env
 LOCALUID=`id -u`
 LOCALUNAME=`id -un`
@@ -75,7 +76,8 @@ LOCALGNAME=`id -gn`
 PNAME=${PNAME}
 APP_PATH=${APP_PATH}
 EOT
-cp $Pfolder/.devcontainer/backend/docker-compose.yml $Pfolder/
+
+cp $Pfolder/.devcontainer/docker-compose.yml $Pfolder/
 
 # 各ディレクトリの.gitを削除
 rm -rf $Pfolder/.git $Pfolder/frontend/.git $Pfolder/backend/.git
