@@ -4,14 +4,11 @@ set -e
 echo "エントリー"
 # .bashrcがあるかチェック
 if [ ! -e "~/.bashrc" ]; then
-    echo "check1"
     cp -f /tmp/.bashrc ~/
 fi
 
-echo "check2"
 # nextがcreate済みかをチェック
 if [ ! -e "next.config.js" ]; then
-    echo "check3"
     env CI=true npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
     # npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
     echo '初期設定 success!!'
@@ -32,7 +29,6 @@ if [ ! -e "next.config.js" ]; then
         # ✔ Would you like to customize the default import alias? … <u>**No**</u> / Yes
         # Creating a new Next.js app in /usr/src/app.
 fi
-echo "check4"
 
 # nextがインストール済みかをチェック
 if yarn list next -i >/dev/null 2>&1; then
