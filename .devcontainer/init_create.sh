@@ -10,7 +10,7 @@ read -p "ここに作成しますか? (y/N):" yn
 if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
     Pfolder="./${PNAME}"
 else
-    read -p "作成するディレクトリを指定してください" dir
+    read -p "作成するディレクトリを指定してください :" dir
     Pfolder="${dir}/${PNAME}"
 fi
 
@@ -36,7 +36,7 @@ if [ ! -f "$Pfolder/.env" ]; then
   # Dockerにおける各ファイル間での環境変数の渡し方
     # https://blog.cloud-acct.com/posts/u-env-docker-compose/
     # https://qiita.com/KEINOS/items/518610bc2fdf5999acf2
-  cat <<EOT > .env
+  cat <<EOT > $Pfolder/.env
 LOCALUID=`id -u`
 LOCALUNAME=`id -un`
 LOCALGID=`id -g`
