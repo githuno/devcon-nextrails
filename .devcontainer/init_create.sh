@@ -47,7 +47,7 @@ EOT
 fi
 # -----------------------------------------------------------------------------------------|
 
-cp $Pfolder/.devcontainer/backend/docker-compose_f.yml $Pfolder/
+cp $Pfolder/.devcontainer/backend/_docker-compose_f.yml $Pfolder/
 cp $Pfolder/.devcontainer/backend/docker-compose.yml $Pfolder/
 
 # -----------------------1.nextアプリ用のディレクトリ生成--------------------------------------|
@@ -55,8 +55,8 @@ if [ ! -d "$Pfolder/frontend" ]; then
   # 1-1.必要なファイルを配置
   mkdir ${Pfolder}/frontend
   # # 1-2.nextアプリファイル群生成
-  docker compose -f ${Pfolder}/docker-compose_f.yml -p ${PNAME} run --rm front_${PNAME} \
-  npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
+  docker compose -f ${Pfolder}/_docker-compose_f.yml -p ${PNAME} run --rm front_${PNAME} # \
+  # npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
 
 fi
 # -----------------------------------------------------------------------------------------|
