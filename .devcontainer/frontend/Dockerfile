@@ -6,8 +6,10 @@ RUN apk update \
     git vim nano sudo bash curl shadow dumb-init
     # https://qiita.com/bricolageart/items/a509594a5b4c349e90b7
 
-COPY ./.devcontainer/.bashrc /root/
-
 ARG APP_PATH
 WORKDIR ${APP_PATH}
 
+COPY ./.devcontainer/frontend/entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+
+ENTRYPOINT ["entrypoint.sh"]

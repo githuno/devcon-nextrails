@@ -3,7 +3,7 @@ version: "3"
 
 services:
   frontend:
-    container_name: frontend
+    container_name: front_${PNAME}
     build:
       context: .
       dockerfile: .devcontainer/frontend/Dockerfile
@@ -20,7 +20,7 @@ services:
       - "3001:3000"
 
   backend:
-    container_name: backend
+    container_name: back_${PNAME}
     build:
       context: .
       dockerfile: .devcontainer/backend/Dockerfile
@@ -48,22 +48,23 @@ services:
 
   db:
     image: postgres:14.3-alpine
-    container_name: postgres
+    container_name: postgres_${PNAME}
     environment:
       - TZ=Asia/Tokyo
       - PGTZ=Asia/Tokyo
       - POSTGRES_PASSWORD=password
     volumes:
-      - type: bind
-        source: ./db/data
-        target: /var/lib/postgresql/data 
+      # - type: bind
+      #   source: ./db/data
+      #   target: /var/lib/postgresql/data 
+      - ./db/data:/var/lib/postgresql/data:rw
       # memo:https://nishinatoshiharu.com/docker-volume-tutorial/
     ports:
       - "5433:5432"
 
   adminer:
     image: adminer:latest
-    container_name: adminer
+    container_name: adminer_${PNAME}
     ports:
       - 8081:8080
     # restart: always

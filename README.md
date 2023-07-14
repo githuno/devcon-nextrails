@@ -8,7 +8,7 @@
 `cd dev_next-rails/`
 
 3.スクリプト実行
-`./.devcontainer/create.sh`
+`./.devcontainer/init_create.sh`
 
 4.server起動確認
 attach vscode
@@ -55,7 +55,7 @@ https://www.distant-view.co.jp/column/3107/
 
 `sudo rm -rf backend/ db/ frontend/ .env docker*`
 
-`./.devcontainer/create.sh`
+`./.devcontainer/init_create.sh`
 
 
 `docker compose -p "myproject" stop`

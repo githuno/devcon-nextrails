@@ -17,6 +17,12 @@ set -e
 # groupdel tmpgrp
 # su node
 
+# .bashrcがあるかチェック
+if [ ! -e "~/.bashrc" ]; then
+    cp -f /tmp/.bashrc ~/
+fi
+
+# railsがnew済みかをチェック
 if [ ! -e "./config/routes.rb" ]; then
 # if [ ! -e "${ROOT}/config/routes.rb" ]; then
   echo 'rails new APIモード を実行する'
@@ -25,10 +31,19 @@ if [ ! -e "./config/routes.rb" ]; then
   bundle install
   rails new . --force --api --database=postgresql --skip-git --skip-bundle
   cp -f /tmp/database.yml ${ROOT}/config/database.yml
-  cp -f /tmp/.bashrc ~/
   bundle install
   rails db:create
-  echo '初期設定成功！！'
+  echo '初期設定 success!!'
+fi
+
+# Railsがインストール済かをチェック
+if gem list rails -i >/dev/null 2>&1; then
+    echo "インストール success!!"
+else
+    bundle install
+    rails db:create
+    rails db:seed
+    echo "インストール success!!"
 fi
 
 # Remove a potentially pre-existing server.pid for Rails.
