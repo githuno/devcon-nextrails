@@ -39,7 +39,7 @@ EOT
 if [ ! -d $Pfolder/.devcontainer ]; then
     git clone $DEV_CON $Pfolder
     # git削除
-    read -p "コンテナ準備用gitを削除します: " INPUT
+    read -p "コンテナ準備用gitを削除します ENTER: " INPUT
     if [ -z "$INPUT" ]; then
         rm -rf $Pfolder/.git
         echo ".gitを削除しました。"
@@ -70,7 +70,7 @@ if [ ! -d $Pfolder/frontend ]; then
         git clone $FRONT_URL $Pfolder/frontend
         
         # git削除
-        read -p "frontendのgitを削除します: " INPUT
+        read -p "frontendのgitを削除します ENTER: " INPUT
         if [ -z "$INPUT" ]; then
             rm -rf $Pfolder/.git
             echo ".gitを削除しました。"
@@ -86,7 +86,7 @@ else
         git clone $FRONT_URL $Pfolder/frontend
 
         # git削除
-        read -p "frontendのgitを削除します: " INPUT
+        read -p "frontendのgitを削除します ENTER: " INPUT
         if [ -z "$INPUT" ]; then
             rm -rf $Pfolder/.git
             echo ".gitを削除しました。"
@@ -117,7 +117,7 @@ if [ ! -d $Pfolder/backend ]; then
         git clone $BACK_URL $Pfolder/backend
 
         # git削除
-        read -p "backendのgitを削除します: " INPUT
+        read -p "backendのgitを削除します ENTER: " INPUT
         if [ -z "$INPUT" ]; then
             rm -rf $Pfolder/.git
             echo ".gitを削除しました。"
@@ -133,7 +133,7 @@ else
         git clone $BACK_URL $Pfolder/backend
 
         # git削除
-        read -p "backendのgitを削除します: " INPUT
+        read -p "backendのgitを削除します ENTER: " INPUT
         if [ -z "$INPUT" ]; then
             rm -rf $Pfolder/.git
             echo ".gitを削除しました。"
