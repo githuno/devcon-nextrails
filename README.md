@@ -15,24 +15,23 @@ frontend: `yarn dev`
 `bash`
 
 ### 3.dbの可視化
-#### adminerから： [http://localhost:8081]
+#### adminerから：
+ [localhost:8081](http://localhost:8081)
 - ###### Adminerについて
-https://zenn.dev/junki555/articles/13da16e4f10c9dee2bb9
-https://www.distant-view.co.jp/column/3107/
+[Nginx+Rails6.0+MySQL8.0+Adminer：docker-compose で rails new](https://zenn.dev/junki555/articles/13da16e4f10c9dee2bb9)
+[Dockerのポート番号とIPアドレスについて](https://www.distant-view.co.jp/column/3107/)
 
 #### 外部ブラウザから：
 - [apidog](https://apidog.com/jp/)
-- postman[https://www.postman.com/]
+- [postman](https://www.postman.com/)
 
 #### 外部vscodeから：
-- vscode拡張-> thunder Client[https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client]
-- Rapid API Client[https://marketplace.visualstudio.com/items?itemName=RapidAPI.vscode-rapidapi-client]
+- [thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client)
+- [Rapid API Client](https://marketplace.visualstudio.com/items?itemName=RapidAPI.vscode-rapidapi-client)
 
 #### 内部vscodeから：
-- PostgreSQL[https://marketplace.visualstudio.com/items?itemName=ckolkman.vscode-postgres]
-
- <!-- VScodeのPostgreSQL拡張が便利:https://od10z.wordpress.com/2019/12/17/vscode-extensions-for-postgresql/ -->
-    
+- [PostgreSQL](https://marketplace.visualstudio.com/items?itemName=ckolkman.vscode-postgres)
+        [VScodeのPostgreSQL拡張が便利](https://od10z.wordpress.com/2019/12/17/vscode-extensions-for-postgresql/)   
 
 
 ---
