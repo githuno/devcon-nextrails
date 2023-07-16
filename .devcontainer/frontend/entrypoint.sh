@@ -26,20 +26,6 @@ if [ ! -e "next.config.js" ]; then
         # Creating a new Next.js app in /usr/src/app.
 fi
 
-# オーナー変更
-usermod --non-unique --uid 1001 --gid 1001 node
-usermod --non-unique --uid ${LOCALUID} ${LOCALUNAME}
-groupmod --non-unique --gid ${LOCALGID} ${LOCALGNAME}
-chown -R ${LOCALUNAME}:${LOCALGNAME} ${APP_PATH}
-su - ${LOCALUNAME}
-echo "owner changed !!"
-
-# .bashrcがあるかチェック
-if [ ! -e "~/.bashrc" ]; then
-    cp -f /tmp/.bashrc ~/
-    echo ".bashrc copied !"
-fi
-
 # nextがインストール済みかをチェック
 if ! npx next -v; then
     echo "check point 2..."
@@ -48,6 +34,21 @@ if ! npx next -v; then
 else
     echo "check point 3..."
     echo "インストール success!!"
+fi
+
+# オーナー変更
+groupmod --non-unique --gid 1001 node
+usermod --non-unique --uid 1001 --gid 1001 node
+groupmod --non-unique --gid ${LOCALGID} ${LOCALGNAME}
+usermod --non-unique --uid ${LOCALUID} --gid ${LOCALGID} ${LOCALUNAME}
+chown -R ${LOCALUNAME}:${LOCALGNAME} ${APP_PATH}
+su - ${LOCALUNAME}
+echo "owner changed !!"
+
+# .bashrcがあるかチェック
+if [ ! -e "~/.bashrc" ]; then
+    cp -f /tmp/.bashrc ~/
+    echo ".bashrc copied !"
 fi
 
 # Then exec the container's main process (what's set as CMD in the Dockerfile).
