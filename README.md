@@ -18,7 +18,7 @@ frontend: `yarn dev`
 #### adminerから：
  [localhost:8081](http://localhost:8081)
 - ###### Adminerについて
-[Nginx+Rails6.0+MySQL8.0+Adminer：docker-compose で rails new](https://zenn.dev/junki555/articles/13da16e4f10c9dee2bb9)
+[Nginx+Rails6.0+MySQL8.0+Adminer：docker-compose で rails new](https://zenn.dev/junki555/articles/13da16e4f10c9dee2bb9)   
 [Dockerのポート番号とIPアドレスについて](https://www.distant-view.co.jp/column/3107/)
 
 #### 外部ブラウザから：
