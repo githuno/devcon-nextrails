@@ -9,15 +9,6 @@ FRONT_URL=https://github.com/githuno/nextrails-ini-frontend.git
 BACK_URL=https://github.com/githuno/nextrails-ini-backtend.git
 DEV_CON=https://github.com/githuno/devcon-nextrails.git 
 
-cat <<EOT > $Pfolder/.env
-LOCALUID=`id -u`
-LOCALUNAME=`id -un`
-LOCALGID=`id -g`
-LOCALGNAME=`id -gn`
-PNAME=${PNAME}
-APP_PATH=${APP_PATH}
-EOT
-
 # -----------------------------------------------------------------------------------------|
 
 echo "現在の階層は $current_folder 下 です"
@@ -32,6 +23,15 @@ fi
 if [ ! -d $Pfolder ]; then
     mkdir $Pfolder
 fi
+
+cat <<EOT > $Pfolder/.env
+LOCALUID=`id -u`
+LOCALUNAME=`id -un`
+LOCALGID=`id -g`
+LOCALGNAME=`id -gn`
+PNAME=${PNAME}
+APP_PATH=${APP_PATH}
+EOT
 # -----------------------------------------------------------------------------------------|
 
 # Pfolderに.devcontainerがなければPNAMEを作成（devconをクローン:該当フォルダが空なら同名でclone可能）
