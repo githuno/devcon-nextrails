@@ -9,8 +9,11 @@ RUN apk update \
 ARG APP_PATH LOCALUNAME
 WORKDIR ${APP_PATH}
 
-# ユーザーを追加しておく
+# ユーザーを追加して、環境変数をコンテナ内に渡す
 RUN useradd --create-home ${LOCALUNAME}
+ENV APP_PATH=${APP_PATH}
+ENV LOCALUNAME=${LOCALUNAME}
+ENV LOCALGNAME=${LOCALGNAME}
 
 COPY ./.devcontainer/.bashrc /tmp/
 COPY ./.devcontainer/frontend/entrypoint.sh /usr/bin/
