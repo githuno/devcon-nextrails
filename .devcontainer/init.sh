@@ -33,9 +33,9 @@ if [ ! -d $Pfolder/.devcontainer ]; then
     read -p "コンテナ準備用gitを削除します <ENTER>: " INPUT
     if [ -z "$INPUT" ]; then
         rm -rf $Pfolder/.git
-        echo ".gitを削除しました。"
+        echo -e ".gitを削除しました。\\n"
     else
-        echo ".gitは削除しませんでした。"
+        echo -e ".gitは削除しませんでした。\\n"
     fi
 else
     read -p "${Pfolder}は既に存在しますが、上書きして更新していきますか? <y/N>: " yn
@@ -101,7 +101,7 @@ else
         exit;;
     esac   
 fi
-echo -e "︙\\n︙\\n︙\\n   frontend is initialized!!"
+echo -e "︙\\n︙\\n︙\\n   frontend is initialized!!\\n"
 # -----------------------------------------------------------------------------------------|
 echo "【バックエンド】"
 read -p "クローンしたい特定のリポジトリがあればURLを入力（<ENTER>でスキップ）: " INPUT
@@ -148,7 +148,7 @@ else
         exit;;
     esac   
 fi
-echo -e "︙\\n︙\\n︙\\n   backend is initialized!!"
+echo -e "︙\\n︙\\n︙\\n   backend is initialized!!\\n"
 # -----------------------------------------------------------------------------------------|
 if [ ! -d $Pfolder/db ]; then
     mkdir $Pfolder/db $Pfolder/db/data
@@ -167,7 +167,7 @@ else
         exit;;
     esac   
 fi
-echo -e "︙\\n︙\\n︙\\n   db is initialized!!"
+echo -e "︙\\n︙\\n︙\\n   db is initialized!!\\n"
 # -----------------------------------------------------------------------------------------|
 # docker compose up -d 【-buildつけることでキャッシュを使用せずcompose.ymlや依存関係の変更を反映させて新たにイメージをつくります】
 cp $Pfolder/.devcontainer/docker-compose.yml $Pfolder/
