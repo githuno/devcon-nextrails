@@ -5,13 +5,15 @@ echo "エントリー"
 # .bashrcがあるかチェック
 if [ ! -e "~/.bashrc" ]; then
     cp -f /tmp/.bashrc ~/
+    echo ".bshrc copied!"
 fi
 
 # nextがcreate済みかをチェック
 if [ ! -e "next.config.js" ]; then
+    echo "check point 1..."
     env CI=true npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
     # npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
-    echo '初期設定 success!!'
+    echo 'next-app created!!'
     # env CI=false
 
     # 参考「create-next-appで訊かれていること」： https://zenn.dev/ikkik/articles/51d97ff70bd0da 
@@ -32,9 +34,11 @@ fi
 
 # nextがインストール済みかをチェック
 if ! npx next -v; then
+    echo "check point 2..."
     yarn install
     echo "インストール success!!"
 else
+    echo "check point 3..."
     echo "インストール success!!"
 fi
 

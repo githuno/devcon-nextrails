@@ -39,8 +39,12 @@ fi
 # Railsがインストール済かをチェック
 if ! rails -v; then
     bundle install
-    rails db:create
-    rails db:seed
+    if [ ! -e "db/migrate" ]; then
+        rails db:create
+    else
+        rails db:migrate
+        rails db:seed
+    fi
     rm -rf config/master.key # 追記（既存keyの削除）
     EDITOR=vim rails credentials:edit # 追記（keyの新規作成）
     # git rm -f --cached *.key # 追記（追跡除外）
