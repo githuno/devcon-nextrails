@@ -45,9 +45,8 @@ if ! rails -v; then
         rails db:migrate
         rails db:seed
     fi
-    rm -rf config/master.key # 追記（既存keyの削除）
+    rm -f config/master.key config/credentials.yml.enc # 追記（既存keyの削除）
     EDITOR=vim rails credentials:edit # 追記（keyの新規作成）
-    # git rm -f --cached *.key # 追記（追跡除外）
     echo "インストール success!!"
 else
     echo "インストール success!!"
