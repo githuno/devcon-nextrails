@@ -8,6 +8,8 @@ services:
       context: .
       dockerfile: .devcontainer/frontend/Dockerfile
       args:
+        LOCALUNAME: ${LOCALUNAME}
+        LOCALGNAME: ${LOCALGNAME}
         APP_PATH: ${APP_PATH}
     volumes:
       - ./frontend:${APP_PATH}
