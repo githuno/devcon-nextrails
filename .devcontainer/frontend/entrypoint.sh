@@ -12,7 +12,8 @@ fi
 if [ ! -e "next.config.js" ]; then
     echo "check point 1..."
     env CI=true npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
-    # npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
+    chown -R ${LOCALUNAME}:${LOCALGNAME} ${APP_PATH}
+    su - ${LOCALUNAME}
     echo 'next-app created!!'
     # env CI=false
 

@@ -6,8 +6,11 @@ RUN apk update \
     git vim nano sudo bash curl shadow dumb-init
     # https://qiita.com/bricolageart/items/a509594a5b4c349e90b7
 
-ARG APP_PATH
+ARG APP_PATH LOCALUNAME
 WORKDIR ${APP_PATH}
+
+# ユーザーを追加しておく
+RUN useradd --no-create-home ${LOCALUNAME}
 
 COPY ./.devcontainer/.bashrc /tmp/
 COPY ./.devcontainer/frontend/entrypoint.sh /usr/bin/
