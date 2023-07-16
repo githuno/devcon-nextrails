@@ -81,7 +81,7 @@ if [ ! -d $Pfolder/frontend ]; then
 else
     read -p "既存のfrontendを${FRONT_URL}で上書きしますか? (y/N ※または"mk"でnew): " yn
     case "$yn" in
-    [yY]*)
+    ( [yY]* )
         rm -rf $Pfolder/frontend
         git clone $FRONT_URL $Pfolder/frontend
 
@@ -93,12 +93,12 @@ else
         else
             echo ".gitは削除しませんでした。"
         fi;;
-    mk)
+    ( mk )
         rm -rf $Pfolder/frontend
         mkdir $Pfolder/frontend;;
-    *)
+    ( * )
         echo "終了します。"
-        exit
+        exit;;
     esac   
 fi
 echo -e "︙\\n︙\\n︙\\n   frontend is initialized!!"
@@ -128,7 +128,7 @@ if [ ! -d $Pfolder/backend ]; then
 else
     read -p "既存のbackendを${BACK_URL}で上書きしますか? (y/N ※または"mk"でnew): " yn
     case "$yn" in
-    [yY]*)
+    ( [yY]* )
         rm -rf $Pfolder/backend
         git clone $BACK_URL $Pfolder/backend
 
@@ -140,12 +140,12 @@ else
         else
             echo ".gitは削除しませんでした。"
         fi;;
-    mk)
+    ( mk )
         rm -rf $Pfolder/backend
         mkdir $Pfolder/backend;;
-    *)
+    ( * )
         echo "終了します。"
-        exit
+        exit;;
     esac   
 fi
 echo -e "︙\\n︙\\n︙\\n   backend is initialized!!"
@@ -155,14 +155,14 @@ if [ ! -d $Pfolder/db ]; then
 else
     read -p "既存のdbを初期化しますか? (y/N ※または"mk"でnew): " yn
     case "$yn" in
-    [yY]*) 
+    ( [yY]* ) 
         rm -rf $Pfolder/db
         mkdir $Pfolder/db $Pfolder/db/data
         echo "db is initialized!!";;
-    mk)
+    ( mk )
         rm -rf db/
         mkdir $Pfolder/db $Pfolder/db/data;;
-    *)
+    ( * )
         echo "終了します。"
         exit;;
     esac   
