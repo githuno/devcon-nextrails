@@ -46,7 +46,7 @@ if [ ! -d $Pfolder/.devcontainer ]; then
         echo ".gitは削除しませんでした。"
     fi
 else
-    read -p "${Pfolder}は既に存在しますが、続けますか? (y/N):" yn
+    read -p "${Pfolder}は既に存在しますが、上書きして更新していきますか? (y/N): " yn
     if [ ! "$yn" = "y" ] && [ ! "$yn" = "Y" ]; then
         echo "終了します。"
         exit
@@ -94,7 +94,7 @@ else
         fi;;
     *)
         echo "終了します。"
-        exit;;
+        exit
     esac   
 fi
 echo -e "︙\\n︙\\n︙\\n   frontend is initialized!!"
@@ -138,7 +138,7 @@ else
         fi;;
     *)
         echo "終了します。"
-        exit;;
+        exit
     esac   
 fi
 echo -e "︙\\n︙\\n︙\\n   backend is initialized!!"
