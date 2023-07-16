@@ -28,6 +28,9 @@ fi
 
 # Pfolderに.devcontainerがなければPNAMEを作成（devconをクローン:該当フォルダが空なら同名でclone可能）
 if [ ! -d $Pfolder/.devcontainer ]; then
+    if [ -e $Pfolder/db ]; then
+        sudo rm -rf $Pfolder/db
+    fi
     git clone $DEV_CON $Pfolder
     # git削除
     read -p "コンテナ準備用gitを削除します <ENTER>: " INPUT
@@ -156,11 +159,11 @@ else
     read -p "既存のdbを初期化しますか? <y/N> (※または"mk"でnew): " yn
     case "$yn" in
     ( [yY]* ) 
-        rm -rf $Pfolder/db
+        sudo rm -rf $Pfolder/db
         mkdir $Pfolder/db $Pfolder/db/data
         echo "db is initialized!!";;
     ( mk )
-        rm -rf db/
+        sudo rm -rf db/
         mkdir $Pfolder/db $Pfolder/db/data;;
     ( * )
         echo "終了します。"

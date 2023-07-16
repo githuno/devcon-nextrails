@@ -45,12 +45,13 @@ if ! rails -v; then
         rails db:migrate
         rails db:seed
     fi
-    rm -f config/master.key # 追記（既存keyの削除）
-    EDITOR=vim rails credentials:edit # 追記（keyの新規作成）
-    echo "インストール success!!"
-else
-    echo "インストール success!!"
+
+    # master.key の再生成
+    rm -f config/master.key config/credentials.yml.enc # 既存keyの削除
+    rails credentials:edit # keyの作成
+    EDITOR=true rails credentials:edit # credentials.yml.enc の再作成
 fi
+echo "インストール success!!"
 
 # Remove a potentially pre-existing server.pid for Rails.
 rm -f ${ROOT}/tmp/pids/server.pid

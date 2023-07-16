@@ -2,11 +2,6 @@
 set -e
 
 echo "エントリー"
-# .bashrcがあるかチェック
-if [ ! -e "~/.bashrc" ]; then
-    cp -f /tmp/.bashrc ~/
-    echo ".bshrc copied!"
-fi
 
 # nextがcreate済みかをチェック
 if [ ! -e "next.config.js" ]; then
@@ -32,9 +27,17 @@ if [ ! -e "next.config.js" ]; then
 fi
 
 # オーナー変更
+usermod --uid 1001 node
 usermod --non-unique --uid ${LOCALUID} ${LOCALUNAME}
+groupmod --non-unique --gid ${LOCALGID} ${LOCALGNAME}
 chown -R ${LOCALUNAME}:${LOCALGNAME} ${APP_PATH}
 su - ${LOCALUNAME}
+
+# .bashrcがあるかチェック
+if [ ! -e "~/.bashrc" ]; then
+    cp -f /tmp/.bashrc ~/
+    echo ".bshrc copied!"
+fi
 
 # nextがインストール済みかをチェック
 if ! npx next -v; then
