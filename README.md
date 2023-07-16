@@ -14,7 +14,7 @@ frontend: `yarn dev`
 - ##### bashへの切り替え
 `bash`
 
-- ##### dbの可視化
+### 3.dbの可視化
 adminerから： [http://localhost:8081]
 - ###### Adminerについて
 https://zenn.dev/junki555/articles/13da16e4f10c9dee2bb9
