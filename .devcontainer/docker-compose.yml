@@ -18,6 +18,7 @@ services:
     # command: yarn dev #OK
     # command: dumb-init yarn run #OK
     # command: dumb-init node /root/container.js #NG
+    # https://qiita.com/bricolageart/items/a509594a5b4c349e90b7
     command: /bin/sh
     tty: true
     ports:
