@@ -30,31 +30,40 @@ else
 fi
 # -----------------------------------------------------------------------------------------|
 
-if [ ! -d $Pfolder/frontend ]; then
-    git clone https://github.com/githuno/nextrails-ini-frontend.git $Pfolder/frontend
-    echo "frontend is initialized!!"
-else
-    read -p "フロントエンドを初期化しますか? (y/N):" yn
-    case "$yn" in
-        [yY]*) 
-        rm -rf $Pfolder/frontend
-        git clone https://github.com/githuno/nextrails-ini-frontend.git $Pfolder/frontend
-        echo "frontend is initialized!!";;
-            *)  ;;
-    esac   
+read -p "フロントエンドリポジトリURL:" FRONT_URL
+read -p "バックエンドリポジトリURL:" BACK_URL
+# -----------------------------------------------------------------------------------------|
+
+if [ ! $FRONT_URL == "" ]; then
+    if [ ! -d $Pfolder/frontend ]; then
+        git clone ${FRONT_URL} $Pfolder/frontend
+        echo "frontend is initialized!!"
+    else
+        read -p "$FRONT_URLでフロントエンドを上書きしますか? (y/N):" yn
+        case "$yn" in
+            [yY]*) 
+            rm -rf $Pfolder/frontend
+            git clone ${FRONT_URL} $Pfolder/frontend
+            echo "frontend is initialized!!";;
+                *)  ;;
+        esac   
+    fi
 fi
-if [ ! -d $Pfolder/backend ]; then
-    git clone https://github.com/githuno/nextrails-ini-backend.git $Pfolder/backend
-    echo "backend is initialized!!"
-else
-    read -p "バックエンドを初期化しますか? (y/N):" yn
-    case "$yn" in
-        [yY]*) 
-        rm -rf $Pfolder/backend
-        git clone https://github.com/githuno/nextrails-ini-backend.git $Pfolder/backend
-        echo "backend is initialized!!";;
-            *)  ;;
-    esac   
+if [ ! $BACK_URL == "" ]; then
+    if [ ! -d $Pfolder/backend ]; then
+        git clone ${BACK_URL} $Pfolder/backend
+        echo "backend is initialized!!"
+    else
+        read -p "$BACK
+        _URLでバックエンドを上書きしますか? (y/N):" yn
+        case "$yn" in
+            [yY]*) 
+            rm -rf $Pfolder/backend
+            git clone ${BACK_URL} $Pfolder/backend
+            echo "backend is initialized!!";;
+                *)  ;;
+        esac   
+    fi
 fi
 if [ ! -d $Pfolder/db ]; then
     mkdir $Pfolder/db $Pfolder/db/data
@@ -83,8 +92,6 @@ EOT
 cp $Pfolder/.devcontainer/docker-compose.yml $Pfolder/
 # -----------------------------------------------------------------------------------------|
 
-# 各ディレクトリの.gitを削除
-rm -rf $Pfolder/.git $Pfolder/frontend/.git $Pfolder/backend/.git
 # docker compose up -d 【-buildつけることでキャッシュを使用せずcompose.ymlや依存関係の変更を反映させて新たにイメージをつくります】
 docker compose -f ${Pfolder}/docker-compose.yml -p ${PNAME} up -d --build
 

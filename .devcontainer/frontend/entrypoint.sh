@@ -30,7 +30,7 @@ if [ ! -e "next.config.js" ]; then
         # Creating a new Next.js app in /usr/src/app.
 fi
 
-# nextがインストール済みかをチェック(yarn -vも可？)
+# nextがインストール済みかをチェック
 if ! npx next -v; then
     yarn install
     echo "インストール success!!"
