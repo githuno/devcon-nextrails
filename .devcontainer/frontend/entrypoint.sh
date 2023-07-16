@@ -31,7 +31,8 @@ if [ ! -e "next.config.js" ]; then
         # Creating a new Next.js app in /usr/src/app.
 fi
 
-chown -R ${LOCALUNAME}:${LOCALGNAME} ${APP_PATH}
+# オーナー変更
+chown -R ${LOCALUNAME} ${APP_PATH}
 su - ${LOCALUNAME}
 
 # nextがインストール済みかをチェック
