@@ -17,7 +17,7 @@ ENV LOCALGID=${LOCALGID}
 ENV LOCALGNAME=${LOCALGNAME}
 ENV APP_PATH=${APP_PATH}
 
-COPY ./.devcontainer/.bashrc ./.devcontainer/frontend/test_yarn_dev.sh /tmp/
+COPY ./.devcontainer/.bashrc /tmp/
 COPY ./.devcontainer/frontend/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 
