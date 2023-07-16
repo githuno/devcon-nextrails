@@ -38,6 +38,7 @@ frontend: `yarn dev`
 bash
 
 ### dbの可視化
+adminerから：   
 外部ブラウザから：  apidog ｜ postman
 外部vscodeから：   vscode拡張-> thunder Client ｜ Rapid API Client
 内部vscodeから：    PostgreSQL[https://marketplace.visualstudio.com/items?itemName=ckolkman.vscode-postgres]

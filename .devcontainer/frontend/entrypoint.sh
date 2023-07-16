@@ -27,7 +27,7 @@ if [ ! -e "next.config.js" ]; then
 fi
 
 # オーナー変更
-usermod --uid 1001 node
+usermod --non-unique --uid 1001 --gid 1001 node
 usermod --non-unique --uid ${LOCALUID} ${LOCALUNAME}
 groupmod --non-unique --gid ${LOCALGID} ${LOCALGNAME}
 chown -R ${LOCALUNAME}:${LOCALGNAME} ${APP_PATH}
