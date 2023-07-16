@@ -32,11 +32,12 @@ usermod --non-unique --uid ${LOCALUID} ${LOCALUNAME}
 groupmod --non-unique --gid ${LOCALGID} ${LOCALGNAME}
 chown -R ${LOCALUNAME}:${LOCALGNAME} ${APP_PATH}
 su - ${LOCALUNAME}
+echo "owner changed !!"
 
 # .bashrcがあるかチェック
 if [ ! -e "~/.bashrc" ]; then
     cp -f /tmp/.bashrc ~/
-    echo ".bshrc copied!"
+    echo ".bashrc copied !"
 fi
 
 # nextがインストール済みかをチェック

@@ -39,9 +39,8 @@ fi
 # Railsがインストール済かをチェック
 if ! rails -v; then
     bundle install
-    if [ ! -e "db/migrate" ]; then
-        rails db:create
-    else
+    rails db:create
+    if [ -e "db/migrate" ]; then
         rails db:migrate
         rails db:seed
     fi
