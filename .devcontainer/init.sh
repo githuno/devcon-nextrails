@@ -17,7 +17,8 @@ if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
     Pfolder="./${PNAME}"
 else
     read -p "作成するディレクトリを指定してください: " dir
-    Pfolder="${dir}/${PNAME}"
+    TRIMMED=$(echo "$dir" | sed 's:/*$::')
+    Pfolder="${TRIMMED}/${PNAME}"
 fi
 
 if [ ! -d $Pfolder ]; then
