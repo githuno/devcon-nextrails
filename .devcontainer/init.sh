@@ -12,7 +12,7 @@ DEV_CON=https://github.com/githuno/devcon-nextrails.git
 # -----------------------------------------------------------------------------------------|
 
 echo "現在の階層は $current_folder 下 です"
-read -p "ここに作成しますか? (y/N):" yn
+read -p "ここに${PNAME}プロジェクトを作成しますか? (y/N):" yn
 if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
     Pfolder="./${PNAME}"
 else
