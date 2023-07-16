@@ -15,15 +15,25 @@ frontend: `yarn dev`
 `bash`
 
 - ##### dbの可視化
-adminerから：   
-外部ブラウザから：  apidog ｜ postman
-外部vscodeから：   vscode拡張-> thunder Client ｜ Rapid API Client
-内部vscodeから：    PostgreSQL[https://marketplace.visualstudio.com/items?itemName=ckolkman.vscode-postgres]
- <!-- VScodeのPostgreSQL拡張が便利:https://od10z.wordpress.com/2019/12/17/vscode-extensions-for-postgresql/ -->
-    
-- ##### Adminerについて
+adminerから： [http://localhost:8081]
+- ###### Adminerについて
 https://zenn.dev/junki555/articles/13da16e4f10c9dee2bb9
 https://www.distant-view.co.jp/column/3107/
+
+外部ブラウザから：
+- apidog[https://apidog.com/jp/]
+- postman[https://www.postman.com/]
+
+外部vscodeから：
+- vscode拡張-> thunder Client[https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client]
+- Rapid API Client[https://marketplace.visualstudio.com/items?itemName=RapidAPI.vscode-rapidapi-client]
+
+内部vscodeから：
+- PostgreSQL[https://marketplace.visualstudio.com/items?itemName=ckolkman.vscode-postgres]
+
+ <!-- VScodeのPostgreSQL拡張が便利:https://od10z.wordpress.com/2019/12/17/vscode-extensions-for-postgresql/ -->
+    
+
 
 ---
 ## 参考サイト
