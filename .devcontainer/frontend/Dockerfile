@@ -6,14 +6,16 @@ RUN apk update \
     git vim nano sudo bash curl shadow dumb-init
     # https://qiita.com/bricolageart/items/a509594a5b4c349e90b7
 
-ARG APP_PATH LOCALUNAME
+ARG APP_PATH LOCALUID LOCALUNAME LOCALGID LOCALGNAME
 WORKDIR ${APP_PATH}
 
 # ユーザーを追加して、環境変数をコンテナ内に渡す
 RUN useradd --create-home ${LOCALUNAME}
-ENV APP_PATH=${APP_PATH}
+ENV LOCALUID=${LOCALUID}
 ENV LOCALUNAME=${LOCALUNAME}
+ENV LOCALGID=${LOCALGID}
 ENV LOCALGNAME=${LOCALGNAME}
+ENV APP_PATH=${APP_PATH}
 
 COPY ./.devcontainer/.bashrc /tmp/
 COPY ./.devcontainer/frontend/entrypoint.sh /usr/bin/

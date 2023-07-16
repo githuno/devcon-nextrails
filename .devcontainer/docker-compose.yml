@@ -8,7 +8,9 @@ services:
       context: .
       dockerfile: .devcontainer/frontend/Dockerfile
       args:
+        LOCALUID: ${LOCALUID}
         LOCALUNAME: ${LOCALUNAME}
+        LOCALGID: ${LOCALGID}
         LOCALGNAME: ${LOCALGNAME}
         APP_PATH: ${APP_PATH}
     volumes:

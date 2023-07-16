@@ -32,7 +32,8 @@ if [ ! -e "next.config.js" ]; then
 fi
 
 # オーナー変更
-chown -R ${LOCALUNAME} ${APP_PATH}
+usermod --non-unique --uid ${LOCALUID} ${LOCALUNAME}
+chown -R ${LOCALUNAME}:${LOCALGNAME} ${APP_PATH}
 su - ${LOCALUNAME}
 
 # nextがインストール済みかをチェック
