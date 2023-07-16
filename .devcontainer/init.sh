@@ -21,18 +21,9 @@ else
     Pfolder="${TRIMMED}/${PNAME}"
 fi
 
-if [ ! -d $Pfolder ]; then
+if [ ! -e $Pfolder ]; then
     mkdir $Pfolder
 fi
-
-cat <<EOT > $Pfolder/.env
-LOCALUID=`id -u`
-LOCALUNAME=`id -un`
-LOCALGID=`id -g`
-LOCALGNAME=`id -gn`
-PNAME=${PNAME}
-APP_PATH=${APP_PATH}
-EOT
 # -----------------------------------------------------------------------------------------|
 
 # Pfolderに.devcontainerがなければPNAMEを作成（devconをクローン:該当フォルダが空なら同名でclone可能）
@@ -54,6 +45,15 @@ else
     fi
 fi
 
+# -----------------------------------------------------------------------------------------|
+cat <<EOT > $Pfolder/.env
+LOCALUID=`id -u`
+LOCALUNAME=`id -un`
+LOCALGID=`id -g`
+LOCALGNAME=`id -gn`
+PNAME=${PNAME}
+APP_PATH=${APP_PATH}
+EOT
 # -----------------------------------------------------------------------------------------|
 
 echo "【フロントエンド】"
