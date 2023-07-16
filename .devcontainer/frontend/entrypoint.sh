@@ -1,5 +1,6 @@
 #!/bin/sh
-set -e
+
+# set -e # エラーがでたらスクリプトを終了する
 
 echo "エントリー"
 
@@ -37,11 +38,7 @@ else
 fi
 
 # .nextを生成するために一度yarn devを実行
-yarn dev &
-PID=$! # yarn devのプロセスIDを取得
-sleep 10 # 何らかの処理を行う（例：待機時間など）
-kill $PID # yarn devのプロセスを停止
-echo "サーバーを停止しました。"
+/tmp/test_yarn_dev.sh
 
 # オーナー変更
 # groupmod --non-unique --gid 1001 node
