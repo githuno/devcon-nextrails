@@ -6,7 +6,7 @@ export APP_PATH=/app
 
 # クローンリポジトリの初期URL
 FRONT_URL=https://github.com/githuno/nextrails-ini-frontend.git
-BACK_URL=https://github.com/githuno/nextrails-ini-backtend.git
+BACK_URL=https://github.com/githuno/nextrails-ini-backend.git
 DEV_CON=https://github.com/githuno/devcon-nextrails.git 
 
 # -----------------------------------------------------------------------------------------|
