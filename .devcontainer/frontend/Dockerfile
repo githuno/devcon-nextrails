@@ -10,7 +10,7 @@ ARG APP_PATH LOCALUNAME
 WORKDIR ${APP_PATH}
 
 # ユーザーを追加しておく
-RUN useradd --no-create-home ${LOCALUNAME}
+RUN useradd --create-home ${LOCALUNAME}
 
 COPY ./.devcontainer/.bashrc /tmp/
 COPY ./.devcontainer/frontend/entrypoint.sh /usr/bin/

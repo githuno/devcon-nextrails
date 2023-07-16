@@ -12,8 +12,6 @@ fi
 if [ ! -e "next.config.js" ]; then
     echo "check point 1..."
     env CI=true npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
-    chown -R ${LOCALUNAME}:${LOCALGNAME} ${APP_PATH}
-    su - ${LOCALUNAME}
     echo 'next-app created!!'
     # env CI=false
 
@@ -32,6 +30,9 @@ if [ ! -e "next.config.js" ]; then
         # ✔ Would you like to customize the default import alias? … <u>**No**</u> / Yes
         # Creating a new Next.js app in /usr/src/app.
 fi
+
+chown -R ${LOCALUNAME}:${LOCALGNAME} ${APP_PATH}
+su - ${LOCALUNAME}
 
 # nextがインストール済みかをチェック
 if ! npx next -v; then
