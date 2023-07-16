@@ -28,7 +28,7 @@ if [ ! -e "next.config.js" ]; then
 fi
 
 # nextがインストール済みかをチェック
-if ! npx next -v; then
+if ! yarn dev; then
     echo "check point 2..."
     yarn install
     echo "インストール success!!"

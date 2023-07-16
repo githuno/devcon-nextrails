@@ -85,6 +85,9 @@ else
     read -p "既存のfrontendを${FRONT_URL}で上書きしますか? <y/N> (※または"mk"でnew): " yn
     case "$yn" in
     ( [yY]* )
+        if [ -e "$Pfolder/frontend/.next" ]; then
+            sudo rm -rf $Pfolder/frontend/.next # 一度でもrootでyarn devするとrootファイルが生成されてしまう
+        fi
         rm -rf $Pfolder/frontend
         git clone $FRONT_URL $Pfolder/frontend
 
@@ -97,6 +100,9 @@ else
             echo ".gitは削除しませんでした。"
         fi;;
     ( mk )
+        if [ -e "$Pfolder/frontend/.next" ]; then
+            sudo rm -rf $Pfolder/frontend/.next # 一度でもrootでyarn devするとrootファイルが生成されてしまう
+        fi
         rm -rf $Pfolder/frontend
         mkdir $Pfolder/frontend;;
     ( * )
@@ -166,8 +172,7 @@ else
         sudo rm -rf db/
         mkdir $Pfolder/db $Pfolder/db/data;;
     ( * )
-        echo "終了します。"
-        exit;;
+        echo "このままdb/dataを使用します。";;
     esac   
 fi
 echo -e "︙\\n︙\\n︙\\n   db is initialized!!\\n"
