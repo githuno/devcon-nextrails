@@ -92,6 +92,9 @@ else
         else
             echo ".gitは削除しませんでした。"
         fi;;
+    mk)
+        rm -rf $Pfolder/frontend
+        mkdir $Pfolder/frontend;;
     *)
         echo "終了します。"
         exit
@@ -136,6 +139,9 @@ else
         else
             echo ".gitは削除しませんでした。"
         fi;;
+    mk)
+        rm -rf $Pfolder/backend
+        mkdir $Pfolder/backend;;
     *)
         echo "終了します。"
         exit
@@ -152,6 +158,9 @@ else
         rm -rf $Pfolder/db
         mkdir $Pfolder/db $Pfolder/db/data
         echo "db is initialized!!";;
+    mk)
+        rm -rf db/
+        mkdir $Pfolder/db $Pfolder/db/data;;
     *)
         echo "終了します。"
         exit;;
