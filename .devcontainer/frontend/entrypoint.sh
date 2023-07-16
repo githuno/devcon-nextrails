@@ -30,19 +30,12 @@ if [ ! -e "next.config.js" ]; then
         # Creating a new Next.js app in /usr/src/app.
 fi
 
-# nextがインストール済みかをチェック
-if yarn list next -i >/dev/null 2>&1; then
-    echo "インストール success!!"
-else
+# nextがインストール済みかをチェック(yarn -vも可？)
+if ! npx next -v; then
     yarn install
     echo "インストール success!!"
-    # # バージョン確認で条件式つくってもよい
-    # # Next.jsのバージョンを確認
-    # next_version=$(npm list -g next 2>/dev/null)
-    # # Next.jsのバージョンが表示されない場合、つまりNext.jsがインストールされていない場合
-    # if [[ -z $next_version ]]; then
-    #     echo "インストールして"
-    # fi
+else
+    echo "インストール success!!"
 fi
 
 # Then exec the container's main process (what's set as CMD in the Dockerfile).

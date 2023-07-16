@@ -16,6 +16,7 @@ fi
 if [ ! -d $Pfolder ]; then
     mkdir $Pfolder
 fi
+# -----------------------------------------------------------------------------------------|
 
 # Pfolderに.devcontainerがなければPNAMEを作成（devconをクローン:該当フォルダが空なら同名でclone可能）
 if [ ! -d $Pfolder/.devcontainer ]; then
@@ -27,6 +28,7 @@ else
         exit
     fi
 fi
+# -----------------------------------------------------------------------------------------|
 
 if [ ! -d $Pfolder/frontend ]; then
     git clone https://github.com/githuno/nextrails-ini-frontend.git $Pfolder/frontend
@@ -67,6 +69,7 @@ else
             *)  ;;
     esac   
 fi
+# -----------------------------------------------------------------------------------------|
 
 cat <<EOT > $Pfolder/.env
 LOCALUID=`id -u`
@@ -78,6 +81,7 @@ APP_PATH=${APP_PATH}
 EOT
 
 cp $Pfolder/.devcontainer/docker-compose.yml $Pfolder/
+# -----------------------------------------------------------------------------------------|
 
 # 各ディレクトリの.gitを削除
 rm -rf $Pfolder/.git $Pfolder/frontend/.git $Pfolder/backend/.git
