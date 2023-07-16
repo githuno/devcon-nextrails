@@ -36,8 +36,8 @@ frontend: `yarn dev`
 
 ---
 ## 参考サイト
-[React開発効率を3倍にするVS Code拡張機能&環境設定](https://qiita.com/newt0/items/b7810fb38c339ec5e4a7)  
-[Nginx+Next.js+Rails+PostgreSQLを使用した開発環境構築](https://computer-tb.co.jp/2022/06/22/nginxnext-jsrailspostgresql%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%97%E3%81%9F%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89/)
+- [React開発効率を3倍にするVS Code拡張機能&環境設定](https://qiita.com/newt0/items/b7810fb38c339ec5e4a7)  
+- [Nginx+Next.js+Rails+PostgreSQLを使用した開発環境構築](https://computer-tb.co.jp/2022/06/22/nginxnext-jsrailspostgresql%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%97%E3%81%9F%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89/)
 
 - →マウントの記述方法について（Permission Deniedエラー）
     - https://zenn.dev/sarisia/articles/0c1db052d09921
