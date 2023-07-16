@@ -36,13 +36,20 @@ else
     echo "インストール success!!"
 fi
 
+# .nextを生成するために一度yarn devを実行
+yarn dev &
+PID=$! # yarn devのプロセスIDを取得
+sleep 10 # 何らかの処理を行う（例：待機時間など）
+kill $PID # yarn devのプロセスを停止
+echo "サーバーを停止しました。"
+
 # オーナー変更
-groupmod --non-unique --gid 1001 node
-usermod --non-unique --uid 1001 --gid 1001 node
+# groupmod --non-unique --gid 1001 node
+# usermod --non-unique --uid 1001 --gid 1001 node
 groupmod --non-unique --gid ${LOCALGID} ${LOCALGNAME}
 usermod --non-unique --uid ${LOCALUID} --gid ${LOCALGID} ${LOCALUNAME}
 chown -R ${LOCALUNAME}:${LOCALGNAME} ${APP_PATH}
-su - ${LOCALUNAME}
+# su - ${LOCALUNAME}
 echo "owner changed !!"
 
 # .bashrcがあるかチェック
