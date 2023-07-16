@@ -38,8 +38,8 @@ fi
 if [ ! -d $Pfolder/.devcontainer ]; then
     git clone $DEV_CON $Pfolder
     # git削除
-    read -p "コンテナ準備用gitを削除します。" INPUT
-    if [ ! -z "$INPUT" ]; then
+    read -p "コンテナ準備用gitを削除します: " INPUT
+    if [ -z "$INPUT" ]; then
         rm -rf $Pfolder/.git
         echo ".gitを削除しました。"
     else
@@ -56,88 +56,88 @@ fi
 # -----------------------------------------------------------------------------------------|
 
 echo "【フロントエンド】"
-read -p "クローンしたい特定のリポジトリがあればURLを入力（ENTERでスキップ）:" INPUT
+read -p "クローンしたい特定のリポジトリがあればURLを入力（ENTERでスキップ）: " INPUT
 if [ ! -z "$INPUT" ]; then
     FRONT_URL=${INPUT}
 fi
 
 if [ ! -d $Pfolder/frontend ]; then
-    read -p "frontendを${FRONT_URL}で初期化します。("mk"でnew):" INPUT
+    read -p "frontendを${FRONT_URL}で初期化します。("mk"でnew): " INPUT
     if [ "$INPUT" == "mk" ]; then
         mkdir $Pfolder/frontend
     else
         git clone $FRONT_URL $Pfolder/frontend
         
         # git削除
-        read -p "frontendのgitを削除します。" INPUT
-        if [ ! -z "$INPUT" ]; then
-            rm -rf $Pfolder/frontend/.git
+        read -p "frontendのgitを削除します: " INPUT
+        if [ -z "$INPUT" ]; then
+            rm -rf $Pfolder/.git
             echo ".gitを削除しました。"
         else
             echo ".gitは削除しませんでした。"
         fi
     fi
 else
-    read -p "既存のfrontendを${FRONT_URL}で上書きしますか? (y/N):" yn
+    read -p "既存のfrontendを${FRONT_URL}で上書きしますか? (y/N): " yn
     case "$yn" in
     [yY]*)
         rm -rf $Pfolder/frontend
         git clone $FRONT_URL $Pfolder/frontend
 
         # git削除
-        read -p "frontendのgitを削除します。" INPUT
-        if [ ! -z "$INPUT" ]; then
-            rm -rf $Pfolder/frontend/.git
+        read -p "frontendのgitを削除します: " INPUT
+        if [ -z "$INPUT" ]; then
+            rm -rf $Pfolder/.git
             echo ".gitを削除しました。"
         else
             echo ".gitは削除しませんでした。"
         fi;;
     *)
-        echo "終了します"
+        echo "終了します。"
         exit;;
     esac   
 fi
 echo -e "︙\\n︙\\n︙\\n   frontend is initialized!!"
 # -----------------------------------------------------------------------------------------|
 echo "【バックエンド】"
-read -p "クローンしたい特定のリポジトリがあればURLを入力（ENTERでスキップ）:" INPUT
+read -p "クローンしたい特定のリポジトリがあればURLを入力（ENTERでスキップ）: " INPUT
 if [ ! -z "$INPUT" ]; then
     BACK_URL=${INPUT}
 fi
 
 if [ ! -d $Pfolder/backend ]; then
-    read -p "backendを${BACK_URL}で初期化します。("mk"でnew):" INPUT
+    read -p "backendを${BACK_URL}で初期化します。("mk"でnew): " INPUT
     if [ "$INPUT" == "mk" ]; then
         mkdir $Pfolder/backend
     else
         git clone $BACK_URL $Pfolder/backend
 
         # git削除
-        read -p "backendのgitを削除します。" INPUT
-        if [ ! -z "$INPUT" ]; then
-            rm -rf $Pfolder/backend/.git
+        read -p "backendのgitを削除します: " INPUT
+        if [ -z "$INPUT" ]; then
+            rm -rf $Pfolder/.git
             echo ".gitを削除しました。"
         else
             echo ".gitは削除しませんでした。"
         fi
     fi
 else
-    read -p "既存のbackendを${BACK_URL}で上書きしますか? (y/N):" yn
+    read -p "既存のbackendを${BACK_URL}で上書きしますか? (y/N): " yn
     case "$yn" in
     [yY]*)
         rm -rf $Pfolder/backend
         git clone $BACK_URL $Pfolder/backend
 
         # git削除
-        read -p "backendのgitを削除します。" INPUT
-        if [ ! -z "$INPUT" ]; then
-            rm -rf $Pfolder/backend/.git
+        read -p "backendのgitを削除します: " INPUT
+        if [ -z "$INPUT" ]; then
+            rm -rf $Pfolder/.git
             echo ".gitを削除しました。"
         else
             echo ".gitは削除しませんでした。"
         fi;;
     *)
-        echo "終了します"
+        echo "終了します。"
         exit;;
     esac   
 fi
@@ -146,14 +146,14 @@ echo -e "︙\\n︙\\n︙\\n   backend is initialized!!"
 if [ ! -d $Pfolder/db ]; then
     mkdir $Pfolder/db $Pfolder/db/data
 else
-    read -p "既存のdbを初期化しますか? (y/N):" yn
+    read -p "既存のdbを初期化しますか? (y/N): " yn
     case "$yn" in
     [yY]*) 
         rm -rf $Pfolder/db
         mkdir $Pfolder/db $Pfolder/db/data
         echo "db is initialized!!";;
     *)
-        echo "終了します"
+        echo "終了します。"
         exit;;
     esac   
 fi
