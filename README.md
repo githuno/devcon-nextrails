@@ -1,11 +1,21 @@
 ## 環境構築
 ### 0.docker構築
+1. dockerインストール
+    - mac/Linux   :そのままDockerインストール　　
+    - win     :WSL2を有効化後にDockerインストール　　
+    - codespace  :　「code」ボタン->「Create codespace on main」ボタン（dockerは既に入ってる）
 
-### 1.初期化
-`. ./init.sh`
+2. ターミナルコンソールで`docker --version`が有効か確認する
+3. VScodeにdocker拡張機能を追加
+
+### 1.初期化スクリプト実行
+`. <PATH TO>/init.sh`  
+例1：`. ./init.sh`  
+例2：`. ./.devcontainer/init.sh`
 
 ### 2.サーバ起動確認
-各コンテナにVScodeでattach 
+Docker拡張のGUI操作で、各コンテナに「VScodeでattach」　　 
+または（codespaceなどでは）、`code <PATH TO>/frontend`および`code <PATH TO>/backend`
 
 - ##### サーバーの立ち上げ
 backend: `rails s -e`
