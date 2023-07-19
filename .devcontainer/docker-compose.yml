@@ -24,6 +24,8 @@ services:
     tty: true
     ports:
       - ${PORT1}
+    networks:
+      - nw
 
   backend: # サービス名は変数は使えない
     container_name: ${CONTAINER2}_${APPNAME}_${PNAME}
@@ -57,6 +59,8 @@ services:
     depends_on:
       - ${CONTAINER3}
     tty: true # 追記
+    networks:
+      - nw
 
   db: # サービス名は変数は使えない
     image: postgres:14.3-alpine
@@ -90,3 +94,10 @@ services:
       - ADMINER_DB=${DB_NAME}
       - ADMINER_USERNAME=${DB_USER}
       - ADMINER_PASSWORD=${DB_PW}
+
+networks:
+  nw:
+    ipam:
+      driver: default
+      config:
+        - gateway: 172.21.0.1
