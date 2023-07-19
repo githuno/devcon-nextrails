@@ -1,0 +1,15 @@
+# keyファイルを無視
+# *.key
+
+# --------------------
+
+# 必要なファイルだけを追跡する。
+/*
+!/frontend/
+!/backend/
+!/.bashrc
+!/docker-compose.yml
+!/README.md
+
+!/.git
+!/.gitignore
