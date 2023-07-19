@@ -10,8 +10,7 @@
 
 ### 1.初期化スクリプト実行
 `. <PATH TO>/init.sh`  
-例1：`. ./init.sh`  
-例2：`. ./.devcontainer/init.sh`
+例1：`. init.sh`  
 
 ### 2.サーバ起動確認
 Docker拡張のGUI操作で、各コンテナに「VScodeでattach」　　 
@@ -63,7 +62,7 @@ frontend: `yarn dev`
 
 `sudo rm -rf backend/ db/ frontend/ .env docker*`
 
-`./.devcontainer/init_create.sh`
+`. init.sh`
 
 
 `docker compose -p "myproject" stop`

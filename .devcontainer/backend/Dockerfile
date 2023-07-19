@@ -1,18 +1,22 @@
 FROM ruby:3.1.2-alpine
 
 # docker-compose.ymlからもらう変数
-ARG APP_PATH LOCALUID LOCALUNAME LOCALGID LOCALGNAME
+ARG APP_PATH LOCALUID LOCALUNAME LOCALGID LOCALGNAME LANG TZ CONTAINER2 DB_NAME DB_USER DB_PW
 # コンテナ内に引き継ぐ変数
 ENV ROOT=${APP_PATH}
-ENV LANG=C.UTF-8
-ENV TZ=Asia/Tokyo
+ENV LANG=${LANG}
+ENV TZ=${TZ}
+ENV DB_NAME=${DB_NAME}
+ENV DB_USER=${DB_USER}
+ENV DB_PW=${DB_PW}
 
-COPY ./.devcontainer/.bashrc \
-    ./.devcontainer/backend/app/database.yml \
-    ./.devcontainer/backend/app/.gitignore \
-    ./.devcontainer/backend/app/Gemfile \
-    ./.devcontainer/backend/app/Gemfile.lock /tmp/
-COPY ./.devcontainer/backend/entrypoint.sh /usr/bin/
+# docker-compose.ymlから見た相対位置(ただし親階層には遡れない)
+COPY ./.bashrc \
+    ./${CONTAINER2}/config/database.yml \
+    ./${CONTAINER2}/config/.gitignore \
+    ./${CONTAINER2}/config/Gemfile \
+    ./${CONTAINER2}/config/Gemfile.lock /tmp/
+COPY ./${CONTAINER2}/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 
 RUN apk update && \

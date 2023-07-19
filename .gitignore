@@ -3,9 +3,10 @@
 
 # --------------------
 
-# READMEと.devcontainer/だけを追跡する。
+# 必要なファイルだけを追跡する。
 /*
 !/.devcontainer/
 !/.git/
+!/init.sh
 !/README.md
 !/.gitignore
