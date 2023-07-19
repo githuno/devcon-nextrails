@@ -98,7 +98,8 @@ services:
       - ADMINER_PASSWORD=${DB_PW}
     networks:
       - nw
-
+      
+# http://ajisaba.net/develop/docker/docker-compose_ip.html
 networks:
   nw:
     ipam:
@@ -106,3 +107,4 @@ networks:
       config:
         - subnet: 10.0.0.0/16
           gateway: 10.0.0.1
+          
