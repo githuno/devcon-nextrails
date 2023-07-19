@@ -2,7 +2,7 @@
 version: "3"
 
 services:
-  frontend:
+  frontend: # サービス名は変数は使えない
     container_name: ${CONTAINER1}_${APPNAME}_${PNAME}
     build:
       context: .
@@ -25,7 +25,7 @@ services:
     ports:
       - ${PORT1}
 
-  backend:
+  backend: # サービス名は変数は使えない
     container_name: ${CONTAINER2}_${APPNAME}_${PNAME}
     build:
       context: .
@@ -58,7 +58,7 @@ services:
       - ${CONTAINER3}
     tty: true # 追記
 
-  db:
+  db: # サービス名は変数は使えない
     image: postgres:14.3-alpine
     container_name: ${CONTAINER3}_${APPNAME}_${PNAME}
     environment:
@@ -75,7 +75,7 @@ services:
     ports:
       - ${PORT3}
 
-  adminer:
+  adminer: # サービス名は変数は使えない
     image: adminer:latest
     container_name: ${CONTAINER4}_${APPNAME}_${PNAME}
     ports:
