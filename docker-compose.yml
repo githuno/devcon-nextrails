@@ -8,18 +8,21 @@ services:
       context: .
       dockerfile: ./${CONTAINER1}/Dockerfile
       args:
+        CONTAINER1: ${CONTAINER1}
         LOCALUID: ${LOCALUID}
         LOCALUNAME: ${LOCALUNAME}
         LOCALGID: ${LOCALGID}
         LOCALGNAME: ${LOCALGNAME}
         APP_PATH: /${APPNAME}
-        CONTAINER1: ${CONTAINER1}
     volumes:
       - ../${APPNAME}/${CONTAINER1}:/${APPNAME}
     # command: yarn dev #OK
     # command: dumb-init yarn run #OK
     # command: dumb-init node /root/container.js #NG
     # https://qiita.com/bricolageart/items/a509594a5b4c349e90b7
+    environment: # コンテナ内に引き継ぐ変数
+      NGATE: ${NGATE}
+      PORT2: ${PORT2}
     command: /bin/sh
     tty: true
     ports:
@@ -33,17 +36,12 @@ services:
       context: .
       dockerfile: ./${CONTAINER2}/Dockerfile
       args: # Dockerfileに引き継ぐ変数
+        CONTAINER2: ${CONTAINER2}
         LOCALUID: ${LOCALUID}
         LOCALUNAME: ${LOCALUNAME}
         LOCALGID: ${LOCALGID}
         LOCALGNAME: ${LOCALGNAME}
         APP_PATH: /${APPNAME}
-        TZ: ${TZ}
-        LANG: ${LANG}
-        DB_NAME: ${DB_NAME}
-        DB_USER: ${DB_USER}
-        DB_PW: ${DB_PW}
-        CONTAINER2: ${CONTAINER2}
     volumes:
       # - type: bind
       #   source: ./${CONTAINER2}
@@ -51,7 +49,12 @@ services:
       - ../${APPNAME}/${CONTAINER2}:/${APPNAME}:rw
     environment: # コンテナ内に引き継ぐ変数
       TZ: ${TZ}
+      LANG: ${LANG}
       RAILS_ENV: development
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PW: ${DB_PW}
+      PORT1: ${PORT1}
     # command: rails server -e
     command: /bin/sh
     ports:
@@ -105,6 +108,6 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 10.0.0.0/16
-          gateway: 10.0.0.1
+        - subnet: ${NSUBW}
+          gateway: ${NGATE}
           

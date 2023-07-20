@@ -1,14 +1,9 @@
 FROM ruby:3.1.2-alpine
 
 # docker-compose.ymlからもらう変数
-ARG APP_PATH LOCALUID LOCALUNAME LOCALGID LOCALGNAME LANG TZ CONTAINER2 DB_NAME DB_USER DB_PW
-# コンテナ内に引き継ぐ変数
+ARG APP_PATH LOCALUID LOCALUNAME LOCALGID LOCALGNAME CONTAINER2
+# コンテナ内にも引き継ぐ変数
 ENV ROOT=${APP_PATH}
-ENV LANG=${LANG}
-ENV TZ=${TZ}
-ENV DB_NAME=${DB_NAME}
-ENV DB_USER=${DB_USER}
-ENV DB_PW=${DB_PW}
 
 # docker-compose.ymlから見た相対位置(ただし親階層には遡れない)
 COPY ./.bashrc \
