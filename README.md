@@ -1,21 +1,30 @@
 ## 環境構築
 ### 0.docker構築
-1. dockerインストール
-    - mac/Linux   :そのままDockerインストール　　
-    - win     :WSL2を有効化後にDockerインストール　　
-    - codespace  :　「code」ボタン->「Create codespace on main」ボタン（dockerは既に入ってる）
+1. [initリポジトリ](https://github.com/githuno/init_devs)をクローンしておく  
 
-2. ターミナルコンソールで`docker --version`が有効か確認する
-3. VScodeにdocker拡張機能を追加
+2. dockerインストール
+    - mac/Linux     :そのままDockerインストール　　
+    - win           :WSL2を有効化後にDockerインストール　　
+    - codespace     :「code」ボタン->「Create codespace on main」ボタン（dockerは既に入ってる）
+
+    ターミナルコンソールで`docker --version`が有効か確認する  
+
+3. VScodeにdocker拡張機能を追加しておく
 
 ### 1.初期化スクリプト実行
-`. <PATH TO>/init.sh`  
+`. <PATH TO>/init_**.sh`  
 例1：`. init.sh`  
 
 ### 2.サーバ起動確認
-Docker拡張のGUI操作で、各コンテナに「VScodeでattach」　
+Docker拡張のGUI操作で、各コンテナに「Attach shell」
 
-【codespaceの場合】
+- ##### 各サーバーを立ち上げ
+backend: `rails s -e`
+frontend: `yarn dev`
+
+    ブラウザで開いて起動を確認  
+
+<!-- 【codespaceの場合】
 1. `code <PATH TO>/frontend`および`code <PATH TO>/backend`
 2. backend（rails）では、/config/environments/development.rb にエラーメッセージで指定されたホスト名を追記する。
     https://engr-sng.com/blog/ruby1
@@ -28,12 +37,7 @@ Docker拡張のGUI操作で、各コンテナに「VScodeでattach」　
     
         config.hosts << "xxxxxxxxxx.vfs.cloud9.ap-northeast-1.amazonaws.com"
     end
-    ```
-
-
-- ##### サーバーの立ち上げ
-backend: `rails s -e`
-frontend: `yarn dev`
+    ``` -->
 
 - ##### bashへの切り替え
 `bash`
@@ -63,7 +67,7 @@ frontend: `yarn dev`
 - [React開発効率を3倍にするVS Code拡張機能&環境設定](https://qiita.com/newt0/items/b7810fb38c339ec5e4a7)  
 - [Nginx+Next.js+Rails+PostgreSQLを使用した開発環境構築](https://computer-tb.co.jp/2022/06/22/nginxnext-jsrailspostgresql%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%97%E3%81%9F%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89/)
 
-- →マウントの記述方法について（Permission Deniedエラー）
+- マウントの記述方法について（Permission Deniedエラー）
     - https://zenn.dev/sarisia/articles/0c1db052d09921
     - https://qiita.com/houchiey/items/ef0321956821c05b4b6a
     - https://docs.docker.jp/v1.11/compose/compose-file.html#volumes-volume-driver
@@ -74,13 +78,6 @@ frontend: `yarn dev`
 `docker system prune -a --volumes`
 
 `sudo docker stop $(sudo docker ps -aq)`
-
-`sudo rm -rf backend/ db/ frontend/ .env docker*`
-
-`. init.sh`
-
-
-`docker compose -p "myproject" stop`
 
 `sudo systemctl stop docker`
 
