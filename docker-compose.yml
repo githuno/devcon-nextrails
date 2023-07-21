@@ -23,7 +23,7 @@ services:
     environment: # コンテナ内に引き継ぐ変数
       NGATE: ${NGATE}
       PORT2: ${PORT2}
-    command: /bin/sh
+    command: dumb-init /bin/sh # PID1問題（シグナル伝搬とプロセス終了）への対応
     tty: true
     ports:
       - ${PORT1}
@@ -54,6 +54,7 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PW: ${DB_PW}
+      NGATE: ${NGATE}
       PORT1: ${PORT1}
     # command: rails server -e
     command: /bin/sh

@@ -13,8 +13,23 @@
 例1：`. init.sh`  
 
 ### 2.サーバ起動確認
-Docker拡張のGUI操作で、各コンテナに「VScodeでattach」　　 
-または（codespaceなどでは）、`code <PATH TO>/frontend`および`code <PATH TO>/backend`
+Docker拡張のGUI操作で、各コンテナに「VScodeでattach」　
+
+【codespaceの場合】
+1. `code <PATH TO>/frontend`および`code <PATH TO>/backend`
+2. backend（rails）では、/config/environments/development.rb にエラーメッセージで指定されたホスト名を追記する。
+    https://engr-sng.com/blog/ruby1
+
+    /config/environments/development.rb
+    ```
+    Rails.application.configure do
+    
+    =====中略=====
+    
+        config.hosts << "xxxxxxxxxx.vfs.cloud9.ap-northeast-1.amazonaws.com"
+    end
+    ```
+
 
 - ##### サーバーの立ち上げ
 backend: `rails s -e`
