@@ -11,9 +11,9 @@ if [ ! -e "next.config.js" ]; then
     echo 'next-app created!!'
     # env CI=false
 
-    # 参考「create-next-appで訊かれていること」： https://zenn.dev/ikkik/articles/51d97ff70bd0da 
+    # 参考「create-next-appで訊かれていること」： https://zenn.dev/ikkik/articles/51d97ff70bd0da
     # 参考「non-interactive」：https://nextjs.org/docs/pages/api-reference/create-next-app#non-interactive
-        #   Ok to proceed? (y) 
+        #   Ok to proceed? (y)
         # ✔ Would you like to use TypeScript with this project? … No / <u>**Yes**</u>
         # ✔ Would you like to use ESLint with this project? … No / <u>**Yes**</u>
         # ✔ Would you like to use Tailwind CSS with this project? … No / <u>**Yes**</u>
@@ -34,14 +34,15 @@ if ! yarn dev; then
     echo "インストール success!!"
 else
     echo "check point 3..."
+	pkill -f "dev"
     echo "インストール success!!"
 fi
 
 # .nextを生成するために一度yarn devを実行
-echo "サーバーを起動します。"
+echo "サーバーを仮起動します。"
 yarn dev &
 PID=$! # yarn devのプロセスIDを取得
-sleep 3 # 何らかの処理を行う（例：待機時間など）
+sleep 1 # 何らかの処理を行う（例：待機時間など）
 kill $PID # yarn devのプロセスを停止
 echo "サーバーを停止しました。"
 
@@ -68,7 +69,9 @@ for pid in $(ps -A -o pid | tail -n +2); do
     if [ $pid -ne 1 ] && ! echo "$KEEP_PIDS" | grep -qw "$pid"; then
         kill -9 "$pid"
     fi
+	echo "check point ...kill $pid "
 done
 
+echo "初期設定完了 !!"
 # Then exec the container's main process (what's set as CMD in the Dockerfile).
 exec "$@"
