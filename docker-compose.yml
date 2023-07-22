@@ -16,14 +16,16 @@ services:
         APP_PATH: /${APPNAME}
     volumes:
       - ../${APPNAME}/${CONTAINER1}:/${APPNAME}
+    environment: # コンテナ内に引き継ぐ変数
+      NGATE: ${NGATE}
+      PORT2: ${PORT2}
+    command: dumb-init /bin/sh # PID1問題（シグナル伝搬とプロセス終了）への対応 : 
     # command: yarn dev #OK
     # command: dumb-init yarn run #OK
     # command: dumb-init node /root/container.js #NG
     # https://qiita.com/bricolageart/items/a509594a5b4c349e90b7
-    environment: # コンテナ内に引き継ぐ変数
-      NGATE: ${NGATE}
-      PORT2: ${PORT2}
-    command: dumb-init /bin/sh # PID1問題（シグナル伝搬とプロセス終了）への対応
+    # https://qiita.com/t_katsumura/items/ed105f1c139b24f7fe4f
+    # https://text.superbrothers.dev/200328-how-to-avoid-pid-1-problem-in-kubernetes/
     tty: true
     ports:
       - ${PORT1}
