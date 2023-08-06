@@ -3,8 +3,8 @@
 1. [initリポジトリ](https://github.com/githuno/init_devs)をクローンしておく  
 
 2. dockerインストール
-    - mac/Linux     :そのままDockerインストール　　
-    - win           :WSL2を有効化後にDockerインストール　　
+    - mac/Linux     : そのままDockerインストール　　
+    - win           : WSL2を有効化後にDockerインストール　　
     - codespace     :「code」ボタン->「Create codespace on main」ボタン（dockerは既に入ってる）
 
     ターミナルコンソールで`docker --version`が有効か確認する  
@@ -12,8 +12,8 @@
 3. VScodeにdocker拡張機能を追加しておく
 
 ### 1.初期化スクリプト実行
-`. <PATH TO>/init_**.sh`  
-例1：`. init.sh`  
+`. <PATH TO>/nextrails.sh`  
+例1：`. naextrails.sh`  
 
 ### 2.サーバ起動確認
 Docker拡張のGUI操作で、各コンテナに「Attach shell」
@@ -22,7 +22,7 @@ Docker拡張のGUI操作で、各コンテナに「Attach shell」
 backend: `rails s -e`
 frontend: `yarn dev`
 
-    ブラウザで開いて起動を確認  
+    ブラウザで開いて起動を確認 (codespaceはHTTPS通信が未解決)  
 
 <!-- 【codespaceの場合】
 1. `code <PATH TO>/frontend`および`code <PATH TO>/backend`
