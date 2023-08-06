@@ -13,7 +13,6 @@ COPY ./.bashrc \
     ./${CONTAINER2}/config/Gemfile.lock /tmp/
 COPY ./${CONTAINER2}/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
-RUN chmod -R +xw /tmp
 
 RUN apk update && \
     apk add \
