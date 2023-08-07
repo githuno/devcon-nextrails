@@ -19,6 +19,7 @@ services:
     environment: # コンテナ内に引き継ぐ変数
       NGATE: ${NGATE}
       PORT2: ${PORT2}
+      BACKENDPOINT: ${BACKENDPOINT} # Codespace用
     command: dumb-init /bin/sh # PID1問題（シグナル伝搬とプロセス終了）への対応 : 
     # command: yarn dev #OK
     # command: dumb-init yarn run #OK
@@ -67,6 +68,8 @@ services:
     tty: true # 追記
     networks:
       - nw
+    labels:
+      com.github.dev.container.visibility: public
 
   db: # サービス名は変数は使えない
     image: postgres:14.3-alpine
@@ -113,4 +116,3 @@ networks:
       config:
         - subnet: ${NSUBW}
           gateway: ${NGATE}
-          
