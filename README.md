@@ -18,11 +18,22 @@
 ### 2.サーバ起動確認
 Docker拡張のGUI操作で、各コンテナに「Attach shell」
 
-- ##### 各サーバーを立ち上げ
+- ##### 各サーバーの立ち上げ
 backend: `rails s -e`
 frontend: `yarn dev`
 
-    ブラウザで開いて起動を確認 (codespaceはHTTPS通信が未解決)  
+    各ポート番号に注意しながら、ブラウザで開いて起動を確認
+
+- ##### bashへの切り替え
+`bash`
+
+【codespaceの場合】
+ターミナルでバックエンドのポートをpublicに変更することで、フロント”クライアント”からのCRUD操作(axios)が可能になる。
+※自動でリセットされるため、起動時は毎回変更が必要。
+※フロント”サーバー”からの操作はプライベートネットワークを使用できるため本操作は不要
+![visibility-change](http://i.imgur.com/Jjwsc.jpg)
+※axios以外のリクエストではGITHUB_TOKENを使うことでvisibility:privateのまま通信可能
+    - 例:`curl -v -X POST -H "X-Github-Token: ghu_XXX" -H 'Content-Type: application/json' -d '{"title":"XXX", "content":"XXX"}' https://XXX-3002.app.github.dev/XXX`
 
 <!-- 【codespaceの場合】
 1. `code <PATH TO>/frontend`および`code <PATH TO>/backend`
@@ -39,8 +50,7 @@ frontend: `yarn dev`
     end
     ``` -->
 
-- ##### bashへの切り替え
-`bash`
+
 
 ### 3.dbの可視化
 #### adminerから：

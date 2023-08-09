@@ -4,6 +4,7 @@ FROM ruby:3.1.2-alpine
 ARG APP_PATH LOCALUID LOCALUNAME LOCALGID LOCALGNAME CONTAINER2
 # コンテナ内にも引き継ぐ変数
 ENV ROOT=${APP_PATH}
+ENV SERVICE=${CONTAINER2}
 
 # docker-compose.ymlから見た相対位置(ただし親階層には遡れない)
 COPY ./.bashrc \
