@@ -63,6 +63,10 @@ services:
       DB_PW: ${DB_PW}
       NGATE: ${NGATE}
       PORT1: ${PORT1}
+      CODESPACES: ${CODESPACES} # Codespace用
+      CODESPACE_NAME: ${CODESPACE_NAME} # Codespace用
+      GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN: ${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN} # Codespace用
+      GITHUB_TOKEN: ${GITHUB_TOKEN} # Codespace用
     # command: rails server -e
     command: /bin/sh
     ports:
