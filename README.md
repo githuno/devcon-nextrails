@@ -31,7 +31,7 @@ frontend: `yarn dev`
 ターミナルでバックエンドのポートをpublicに変更することで、フロント”クライアント”からのCRUD操作(axios)が可能になる。
 ※自動でリセットされるため、起動時は毎回変更が必要。
 ※フロント”サーバー”からの操作はプライベートネットワークを使用できるため本操作は不要
-![visibility-change](http://i.imgur.com/Jjwsc.jpg)
+![visibility-change](img/visibility-public.png)
 ※axios以外のリクエストではGITHUB_TOKENを使うことでvisibility:privateのまま通信可能
     - 例:`curl -v -X POST -H "X-Github-Token: ghu_XXX" -H 'Content-Type: application/json' -d '{"title":"XXX", "content":"XXX"}' https://XXX-3002.app.github.dev/XXX`
 
