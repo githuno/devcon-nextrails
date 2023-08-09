@@ -63,6 +63,7 @@ services:
       DB_PW: ${DB_PW}
       NGATE: ${NGATE}
       PORT1: ${PORT1}
+      PORT2: ${PORT2} # Codespace用
       CODESPACES: ${CODESPACES} # Codespace用
       CODESPACE_NAME: ${CODESPACE_NAME} # Codespace用
       GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN: ${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN} # Codespace用
