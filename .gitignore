@@ -9,6 +9,7 @@
 !/backend/
 !/img/
 !/.bashrc
+!/compose*
 !/docker-compose.yml
 !/README.md
 

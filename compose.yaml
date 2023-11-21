@@ -1,0 +1,108 @@
+# name: ${PNAME}
+version: "3"
+
+services:
+  #--------------------------------------------------
+  frontend: # サービス名は変数は使えない
+    container_name: ${CONTAINER1}_${APPNAME}_${PNAME}
+    build:
+      context: .
+      dockerfile: ./${CONTAINER1}/node.Dockerfile
+      args:
+        CONTAINER1: ${CONTAINER1}
+        LOCALUID: ${LOCALUID}
+        LOCALUNAME: ${LOCALUNAME}
+        LOCALGID: ${LOCALGID}
+        LOCALGNAME: ${LOCALGNAME}
+        APP_PATH: /${APPNAME}
+    volumes:
+      - ../${APPNAME}/${CONTAINER1}:/${APPNAME}
+    environment: # コンテナ内に引き継ぐ変数
+      NGATE: ${NGATE}
+      PORT2: ${PORT2}
+      CONTAINER2: ${CONTAINER2}
+      CODESPACES: ${CODESPACES} # Codespace用
+      CODESPACE_NAME: ${CODESPACE_NAME} # Codespace用
+      GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN: ${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN} # Codespace用
+      GITHUB_TOKEN: ${GITHUB_TOKEN} # Codespace用
+    command: dumb-init node # PID1問題
+    tty: true
+    ports:
+      - ${PORT1}
+    networks:
+      - nw
+  #--------------------------------------------------
+  # backend: # サービス名は変数は使えない
+  #   container_name: ${CONTAINER2}_${APPNAME}_${PNAME}
+  #   build:
+  #     context: .
+  #     dockerfile: ./${CONTAINER2}/Dockerfile
+  #     args: # Dockerfileに引き継ぐ変数
+  #       CONTAINER2: ${CONTAINER2}
+  #       LOCALUID: ${LOCALUID}
+  #       LOCALUNAME: ${LOCALUNAME}
+  #       LOCALGID: ${LOCALGID}
+  #       LOCALGNAME: ${LOCALGNAME}
+  #       APP_PATH: /${APPNAME}
+  #   volumes:
+  #     # - type: bind
+  #     #   source: ./${CONTAINER2}
+  #     #   target: /${APPNAME}:rw
+  #     - ../${APPNAME}/${CONTAINER2}:/${APPNAME}:rw
+  #   environment: # コンテナ内に引き継ぐ変数
+  #     TZ: ${TZ}
+  #     LANG: ${LANG}
+  #     RAILS_ENV: development
+  #     DB_NAME: ${DB_NAME}
+  #     DB_USER: ${DB_USER}
+  #     DB_PW: ${DB_PW}
+  #     NGATE: ${NGATE}
+  #     PORT1: ${PORT1}
+  #     CODESPACE_NAME: ${CODESPACE_NAME} # Codespace用
+  #     # MYPORT: ${PORT2} # Codespace用
+  #     # CODESPACES: ${CODESPACES} # Codespace用
+  #     # GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN: ${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN} # Codespace用
+  #     # GITHUB_TOKEN: ${GITHUB_TOKEN} # Codespace用
+  #   # command:
+  #   command: /bin/sh
+  #   ports:
+  #     - ${PORT2}
+  #   depends_on:
+  #     - ${CONTAINER3}
+  #   tty: true # 追記
+  #   networks:
+  #     - nw
+  # #--------------------------------------------------
+  # db: # サービス名は変数は使えない
+  #   image: minio/minio:latest
+  #   container_name: ${CONTAINER3}_${APPNAME}_${PNAME}
+  #   ports:
+  #     - "9000:9000"
+  #     - "9001:9001" # コンソール用のポートフォワード設定
+  #   environment:
+  #     - TZ=${TZ}
+  #     - PGTZ=${TZ}
+  #     - MINIO_ROOT_USER=${DB_USER}
+  #     - MINIO_ROOT_PASSWORD=${DB_PW}
+  #   entrypoint: sh
+  #   command: -c "/opt/bin/minio server /export --address :9000 --console-address :9001"
+  #   volumes:
+  #     - ../${APPNAME}/${CONTAINER3}/data:/export
+  #   networks:
+  #     - nw
+  # web:
+  #   image: nginx:alpine
+  #   ports:
+  #     - 8888:80
+  #   privileged: true
+  #   volumes:
+  #     - "./:/usr/share/nginx/html"
+      
+# http://ajisaba.net/develop/docker/docker-compose_ip.html
+networks:
+  nw:
+    ipam:
+      driver: default
+      config:
+        - subnet: ${NSUBW}
+          gateway: ${NGATE}
