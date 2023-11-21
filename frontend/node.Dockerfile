@@ -8,7 +8,7 @@ RUN --mount=type=secret,mode=0644,id=npmrc,target=/usr/src/${APPNAME}/.npmrc npm
 # --------------> The production image
 FROM node:lts-alpine
 
-ARG APPNAME CONTAINER_FRONT
+ARG APPNAME LOCALUID LOCALUNAME LOCALGID LOCALGNAME CONTAINER_FRONT
 
 RUN apk update \
     && apk add --no-cache libstdc++ dumb-init \

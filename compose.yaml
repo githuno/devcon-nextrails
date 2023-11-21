@@ -9,12 +9,12 @@ services:
       context: .
       dockerfile: ./${CONTAINER_FRONT}/node.Dockerfile
       args:
-        CONTAINER1: ${CONTAINER1}
+        CONTAINER_FRONT: ${CONTAINER_FRONT}
         LOCALUID: ${LOCALUID}
         LOCALUNAME: ${LOCALUNAME}
         LOCALGID: ${LOCALGID}
         LOCALGNAME: ${LOCALGNAME}
-        APP_PATH: /${APPNAME}
+        APPNAME: ${APPNAME}
     volumes:
       - ../${APPNAME}/${CONTAINER_FRONT}:/${APPNAME}
     environment: # コンテナ内に引き継ぐ変数
