@@ -9,7 +9,7 @@ echo -e "entry...\\n"
 groupmod --non-unique --gid ${LOCALGID} ${LOCALGNAME}
 usermod --non-unique --uid ${LOCALUID} --gid ${LOCALGID} ${LOCALUNAME}
 chown -R ${LOCALUNAME}:${LOCALGNAME} ${APP_PATH}
-su - ${LOCALUNAME}
+# su - ${LOCALUNAME}
 echo -e "owner changed !!\\n\\n"
 
 # .bashrcがあるかチェック

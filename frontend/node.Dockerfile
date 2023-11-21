@@ -20,7 +20,8 @@ ENV APP_PATH=${APP_PATH}
 # docker-compose.ymlから見た相対位置(ただし親階層には遡れない)
 COPY ./.bashrc /tmp/
 COPY ./${CONTAINER1}/node-entrypoint.sh /usr/bin/
-
 RUN chmod +x /usr/bin/node-entrypoint.sh
-
 ENTRYPOINT ["node-entrypoint.sh"]
+
+USER ${LOCALUID}
+COPY ./.bashrc /home/${LOCALUNAME}/
