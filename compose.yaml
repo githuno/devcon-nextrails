@@ -1,13 +1,13 @@
-# name: ${PNAME}
+name: ${PNAME}
 version: "3"
 
 services:
   #--------------------------------------------------
   frontend: # サービス名は変数は使えない
-    container_name: ${CONTAINER1}_${APPNAME}_${PNAME}
+    container_name: ${CONTAINER_FRONT}_${APPNAME}_${PNAME}
     build:
       context: .
-      dockerfile: ./${CONTAINER1}/node.Dockerfile
+      dockerfile: ./${CONTAINER_FRONT}/node.Dockerfile
       args:
         CONTAINER1: ${CONTAINER1}
         LOCALUID: ${LOCALUID}
@@ -16,11 +16,11 @@ services:
         LOCALGNAME: ${LOCALGNAME}
         APP_PATH: /${APPNAME}
     volumes:
-      - ../${APPNAME}/${CONTAINER1}:/${APPNAME}
+      - ../${APPNAME}/${CONTAINER_FRONT}:/${APPNAME}
     environment: # コンテナ内に引き継ぐ変数
       NGATE: ${NGATE}
-      PORT2: ${PORT2}
-      CONTAINER2: ${CONTAINER2}
+      PORT_BACK: ${PORT_BACK}
+      CONTAINER_BACK: ${CONTAINER_BACK}
       CODESPACES: ${CODESPACES} # Codespace用
       CODESPACE_NAME: ${CODESPACE_NAME} # Codespace用
       GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN: ${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN} # Codespace用
@@ -28,7 +28,7 @@ services:
     command: dumb-init /bin/bash # PID1問題
     tty: true
     ports:
-      - ${PORT1}
+      - ${PORT_FRONT}
     networks:
       - nw
   #--------------------------------------------------
@@ -73,6 +73,7 @@ services:
   #   networks:
   #     - nw
   # #--------------------------------------------------
+  # https://qiita.com/taki_21/items/18a6c86f365545b940f3
   # db: # サービス名は変数は使えない
   #   image: minio/minio:latest
   #   container_name: ${CONTAINER3}_${APPNAME}_${PNAME}

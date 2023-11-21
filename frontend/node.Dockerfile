@@ -1,27 +1,29 @@
-FROM node:18-alpine
+# --------------> The build image
+FROM node:latest AS build
+ARG APPNAME
+WORKDIR /usr/src/${APPNAME}
+COPY package*.json /usr/src/${APPNAME}/
+RUN --mount=type=secret,mode=0644,id=npmrc,target=/usr/src/${APPNAME}/.npmrc npm ci --only=production
 
-# "apk add"は"apt-get install"の簡易版（alpine用）
+# --------------> The production image
+FROM node:lts-alpine
+
+ARG APPNAME CONTAINER_FRONT
+
 RUN apk update \
     && apk add --no-cache libstdc++ dumb-init \
     git vim nano sudo bash curl shadow
-    # https://qiita.com/bricolageart/items/a509594a5b4c349e90b7
 
-ARG APP_PATH LOCALUID LOCALUNAME LOCALGID LOCALGNAME CONTAINER1
-WORKDIR ${APP_PATH}
+ENV NODE_ENV production
 
-# ユーザーを追加して、環境変数をコンテナ内に渡す
-RUN useradd --create-home ${LOCALUNAME}
-ENV LOCALUID=${LOCALUID}
-ENV LOCALUNAME=${LOCALUNAME}
-ENV LOCALGID=${LOCALGID}
-ENV LOCALGNAME=${LOCALGNAME}
-ENV APP_PATH=${APP_PATH}
+USER node
+COPY ./.bashrc /home/node/
 
-# docker-compose.ymlから見た相対位置(ただし親階層には遡れない)
-COPY ./.bashrc /tmp/
-COPY ./${CONTAINER1}/node-entrypoint.sh /usr/bin/
+WORKDIR /usr/src/${APPNAME}
+COPY --chown=node:node --from=build /usr/src/${APPNAME}/node_modules /usr/src/${APPNAME}/node_modules
+COPY --chown=node:node . /usr/src/${APPNAME}
+
+COPY ./${CONTAINER_FRONT}/node-entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/node-entrypoint.sh
 ENTRYPOINT ["node-entrypoint.sh"]
-
-USER ${LOCALUID}
-COPY ./.bashrc /home/${LOCALUNAME}/
+# CMD ["dumb-init", "node", "server.js"]
