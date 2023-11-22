@@ -15,7 +15,7 @@ services:
         LOCALGNAME: ${LOCALGNAME}
         APPNAME: ${APPNAME}
     volumes:
-      - ../${APPNAME}/${CONTAINER_FRONT}:/${APPNAME}
+      - ../${APPNAME}/${CONTAINER_FRONT}:/${APPNAME}:rw
     environment: # コンテナ内に引き継ぐ変数
       NGATE: ${NGATE}
       PORT_BACK: ${PORT_BACK}

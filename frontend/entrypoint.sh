@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# set -e # エラーがでたらスクリプトを終了する
+set -e # エラーがでたらスクリプトを終了する
 
 echo -e "entry point.. ---> \\n︙\\n︙\\n︙\\n"
 echo -e "whoami : {`whoami`}\\n"
