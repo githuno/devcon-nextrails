@@ -6,9 +6,6 @@ RUN apk update \
 
 ARG APPNAME CONTAINER_FRONT LOCALUNAME
 
-COPY --chown=${LOCALUNAME}:node --chmod=754 \
-    ./${CONTAINER_FRONT}/entrypoint.sh /usr/bin/
-
 WORKDIR ${APPNAME}
 
 RUN <<EOF
@@ -20,13 +17,13 @@ EOF
 # -m            :ユーザーホームディレクトリ (/home/{USER}) を作成
 # -aG           :ユーザーを指定したグループに追加
 
-COPY ./.bashrc /home/${LOCALUNAME}/
-# compose.yamlから見た相対位置(ただし親階層には遡れない)
+COPY --chown=${LOCALUNAME}:node --chmod=754 \
+    ./${CONTAINER_FRONT}/entrypoint.sh /usr/bin/
+COPY --chown=${LOCALUNAME}:node \
+    ./.bashrc /home/${LOCALUNAME}/
 
-
-USER ${LOCALUNAME}
 ENTRYPOINT ["entrypoint.sh"]
-
+USER ${LOCALUNAME}
 
 # # --------------> The build image
 # FROM node:latest AS build
