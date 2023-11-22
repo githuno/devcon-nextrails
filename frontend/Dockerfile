@@ -25,7 +25,6 @@ COPY --chown=${LOCALUNAME}:node \
     ./.bashrc /home/${LOCALUNAME}/
 
 ENTRYPOINT ["entrypoint.sh"]
-USER ${LOCALUNAME}
 
 # # --------------> The build image
 # FROM node:latest AS build

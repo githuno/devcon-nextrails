@@ -7,7 +7,7 @@ services:
     build:
       context: .
       dockerfile: ./${CONTAINER_FRONT}/Dockerfile
-      args:
+      args: # ビルド時に使用する変数
         CONTAINER_FRONT: ${CONTAINER_FRONT}
         LOCALUID: ${LOCALUID}
         LOCALUNAME: ${LOCALUNAME}
@@ -15,7 +15,7 @@ services:
         LOCALGNAME: ${LOCALGNAME}
         APPNAME: ${APPNAME}
     volumes:
-      - ../${APPNAME}/${CONTAINER_FRONT}/:/${APPNAME}/
+      - ../${APPNAME}/${CONTAINER_FRONT}:.
     user: ${LOCALUID}:2000 # node=2000
     environment: # コンテナ内に引き継ぐ変数
       NGATE: ${NGATE}
