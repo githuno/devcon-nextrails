@@ -10,10 +10,7 @@ COPY ./${CONTAINER_FRONT}/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 
 WORKDIR ${APPNAME}
-
 USER ${LOCALUNAME}
-COPY ./.bashrc /home/${LOCALUNAME}/
-# compose.yamlから見た相対位置(ただし親階層には遡れない)
 
 RUN <<EOF
    useradd -s /bin/bash -m ${LOCALUNAME}
@@ -24,6 +21,8 @@ EOF
 # -m            :ユーザーホームディレクトリ (/home/{USER}) を作成
 # -aG           :ユーザーを指定したグループに追加
 
+COPY ./.bashrc /home/${LOCALUNAME}/
+# compose.yamlから見た相対位置(ただし親階層には遡れない)
 
 ENTRYPOINT ["entrypoint.sh"]
 
