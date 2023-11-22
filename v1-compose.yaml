@@ -6,7 +6,7 @@ services:
     container_name: ${CONTAINER1}_${APPNAME}_${PNAME}
     build:
       context: .
-      dockerfile: ./${CONTAINER1}/next.Dockerfile
+      dockerfile: ./${CONTAINER1}/Dockerfile
       args:
         CONTAINER1: ${CONTAINER1}
         LOCALUID: ${LOCALUID}

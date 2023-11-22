@@ -31,6 +31,8 @@ services:
       - ${PORT_FRONT}
     networks:
       - nw
+    secrets:
+      - npmrc
   #--------------------------------------------------
   # backend: # サービス名は変数は使えない
   #   container_name: ${CONTAINER2}_${APPNAME}_${PNAME}
@@ -73,8 +75,14 @@ services:
   #   networks:
   #     - nw
   # #--------------------------------------------------
+# RDB(cockroach)
+# STRAGE(minio)
+# REDIS()
+# WEB(nginx)
+
+
   # https://qiita.com/taki_21/items/18a6c86f365545b940f3
-  # db: # サービス名は変数は使えない
+  # rdb: # サービス名は変数は使えない
   #   image: minio/minio:latest
   #   container_name: ${CONTAINER3}_${APPNAME}_${PNAME}
   #   ports:
@@ -107,3 +115,6 @@ networks:
       config:
         - subnet: ${NSUBW}
           gateway: ${NGATE}
+secrets:
+  npmrc:
+    file: ./${CONTAINER_FRONT}/.npmrc
