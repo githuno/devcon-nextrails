@@ -5,6 +5,9 @@ set -e # エラーがでたらスクリプトを終了する
 echo -e "entry point.. ---> \\n︙\\n︙\\n︙\\n"
 echo -e "whoami : {`whoami`}\\n"
 echo -e "pwd & ls/ & ls: `pwd && ls -la / && ls -la`\\n"
+echo -e "ls /home/ryo: `ls /home/ryo/`\\n"
+echo -e "ls /usr/bin: `ls /usr/bin/`\\n"
+echo
 cat /etc/passwd
 cat /etc/group
 
