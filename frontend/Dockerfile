@@ -9,6 +9,8 @@ ENV LOCALUNAME=${LOCALUNAME} APPNAME=${APPNAME}
 
 WORKDIR ${APPNAME}
 
+RUN usermod -u 2000 node && groupmod -g 2000 node
+
 RUN <<EOF
    useradd -s /bin/bash -m ${LOCALUNAME}
    usermod -aG node ${LOCALUNAME}

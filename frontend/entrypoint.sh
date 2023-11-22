@@ -4,7 +4,7 @@ set -e # エラーがでたらスクリプトを終了する
 
 echo -e "entry point.. ---> \\n︙\\n︙\\n︙\\n"
 echo -e "whoami : {`whoami`}\\n"
-echo -e "pwd & ls : `pwd && ls -la`\\n"
+echo -e "pwd & ls : `pwd && ls -la /`\\n"
 chown -cvLR ${LOCALUNAME}:node /${APPNAME}
 
 # nextがcreate済みかをチェック
