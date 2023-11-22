@@ -2,19 +2,21 @@
 FROM node:latest AS build
 ARG APPNAME
 WORKDIR /usr/src/${APPNAME}
-COPY package*.json /usr/src/${APPNAME}/
-RUN --mount=type=secret,mode=0644,id=npmrc,target=/usr/src/${APPNAME}/.npmrc npm ci --only=production
-
-# --------------> The production image
+COPY ../.devcontainer/frontend/package*.json /usr/src/${APPNAME}/
+RUN --mount=type=secret,mode=0644,id=npmrc,target=/usr/src/${APPNAME}/.npmrc npm install --only=development
+RUN --mount=type=secret,mode=0644,id=npmrc,target=/usr/src/${APPNAME}/.npmrc npm ci --only=development
+# --------------> The development image
 FROM node:lts-alpine
 
-ARG APPNAME LOCALUID LOCALUNAME LOCALGID LOCALGNAME CONTAINER_FRONT
+ARG APPNAME CONTAINER_FRONT
+# ARG LOCALUID LOCALUNAME LOCALGID LOCALGNAME 
 
 RUN apk update \
     && apk add --no-cache libstdc++ dumb-init \
     git vim nano sudo bash curl shadow
 
-ENV NODE_ENV production
+# ENV NODE_ENV production
+ENV NODE_ENV development
 
 USER node
 COPY ./.bashrc /home/node/
