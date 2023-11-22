@@ -4,8 +4,8 @@
 
 echo -e "entry point.. ---> \\n\\n"
 echo -e "whoami : {`whoami`}\\n"
-echo -e "pwd & ls : {`pwd && ls -la`}\\n"
-chown -R ${LOCALUNAME}:node ${APPNAME}
+echo -e "pwd & ls : `pwd && ls -la`\\n"
+chown -cvLR ${LOCALUNAME}:node ${APPNAME}
 
 # nextがcreate済みかをチェック
 if [ ! -e "next.config.js" ]; then
