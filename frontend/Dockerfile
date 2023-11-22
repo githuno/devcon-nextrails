@@ -6,11 +6,10 @@ RUN apk update \
 
 ARG APPNAME CONTAINER_FRONT LOCALUNAME
 
-COPY ./${CONTAINER_FRONT}/entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
+COPY --chown=${LOCALUNAME}:node --chmod=754 \
+    ./${CONTAINER_FRONT}/entrypoint.sh /usr/bin/
 
 WORKDIR ${APPNAME}
-USER ${LOCALUNAME}
 
 RUN <<EOF
    useradd -s /bin/bash -m ${LOCALUNAME}
@@ -24,6 +23,8 @@ EOF
 COPY ./.bashrc /home/${LOCALUNAME}/
 # compose.yamlから見た相対位置(ただし親階層には遡れない)
 
+
+USER ${LOCALUNAME}
 ENTRYPOINT ["entrypoint.sh"]
 
 
