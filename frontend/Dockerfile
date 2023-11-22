@@ -9,6 +9,7 @@ ARG APPNAME CONTAINER_FRONT LOCALUNAME
 COPY ./${CONTAINER_FRONT}/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 
+WORKDIR ${APPNAME}
 RUN <<EOF
    useradd -s /bin/bash -m ${LOCALUNAME}
    usermod -aG node ${LOCALUNAME}
@@ -18,7 +19,6 @@ EOF
 # -m            :ユーザーホームディレクトリ (/home/{USER}) を作成
 # -aG           :ユーザーを指定したグループに追加
 
-WORKDIR ${APPNAME}
 USER ${LOCALUNAME}
 COPY ./.bashrc /home/${LOCALUNAME}/
 # compose.yamlから見た相対位置(ただし親階層には遡れない)
