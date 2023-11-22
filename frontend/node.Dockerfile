@@ -3,8 +3,9 @@ FROM node:latest AS build
 ARG APPNAME
 WORKDIR /usr/src/${APPNAME}
 COPY ../.devcontainer/frontend/package*.json /usr/src/${APPNAME}/
-RUN --mount=type=secret,mode=0644,id=npmrc,target=/usr/src/${APPNAME}/.npmrc npm install --only=development
-RUN --mount=type=secret,mode=0644,id=npmrc,target=/usr/src/${APPNAME}/.npmrc npm ci --only=development
+RUN --mount=type=secret,mode=0644,id=npmrc,target=/usr/src/${APPNAME}/.npmrc npm install
+# RUN --mount=type=secret,mode=0644,id=npmrc,target=/usr/src/${APPNAME}/.npmrc npm ci --only=development
+
 # --------------> The development image
 FROM node:lts-alpine
 
