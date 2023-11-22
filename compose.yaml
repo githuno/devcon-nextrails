@@ -1,4 +1,3 @@
-name: ${PNAME}
 version: "3"
 
 services:
@@ -25,7 +24,7 @@ services:
       CODESPACE_NAME: ${CODESPACE_NAME} # Codespace用
       GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN: ${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN} # Codespace用
       GITHUB_TOKEN: ${GITHUB_TOKEN} # Codespace用
-    command: dumb-init /bin/bash # PID1問題
+    command: dumb-init /bin/sh # PID1問題
     tty: true
     ports:
       - ${PORT_FRONT}
