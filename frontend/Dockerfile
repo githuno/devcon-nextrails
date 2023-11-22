@@ -5,6 +5,8 @@ RUN apk update \
     git vim nano sudo bash curl shadow dumb-init
 
 ARG APPNAME CONTAINER_FRONT LOCALUNAME
+ENV LOCALUNAME=${LOCALUNAME}
+ENV APPNAME=${APPNAME}
 
 WORKDIR ${APPNAME}
 
