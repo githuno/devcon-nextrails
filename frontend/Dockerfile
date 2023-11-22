@@ -19,7 +19,7 @@ USER ${LOCALUNAME}
 
 # docker-compose.ymlから見た相対位置(ただし親階層には遡れない)
 COPY ./.bashrc /home/${LOCALUNAME}/
-COPY ./${CONTAINER1}/next-entrypoint.sh /usr/bin/
+COPY ./${CONTAINER_FRONT}/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 
 ENTRYPOINT ["entrypoint.sh"]
