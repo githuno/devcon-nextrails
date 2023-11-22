@@ -6,10 +6,11 @@ echo -e "entry point.. ---> \\n︙\\n︙\\n︙\\n"
 echo -e "whoami : {`whoami`}\\n"
 echo -e "pwd & ls/ & ls: `pwd && ls -la / && ls -la`\\n"
 cat /etc/passwd
+cat /etc/group
 
-usermod -aG node ${LOCALUNAME}
-chown -R ${LOCALUNAME}:node /${APPNAME}
-echo -e "pwd & ls/ & ls: `pwd && ls -la / && ls -la`\\n"
+# usermod -aG node ${LOCALUNAME}
+# chown -R ${LOCALUNAME}:node /${APPNAME}
+# echo -e "pwd & ls/ & ls: `pwd && ls -la / && ls -la`\\n"
 # chown -cvLR ${LOCALUNAME}:node /${APPNAME}
 
 # nextがcreate済みかをチェック
