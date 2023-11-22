@@ -12,8 +12,7 @@ WORKDIR ${APPNAME}
 RUN <<EOF
     usermod -u 2000 node && groupmod -g 2000 node
     useradd -s /bin/bash -u ${LOCALUID} -m ${LOCALUNAME}
-    usermod -aG node ${LOCALUNAME}
-    chown -R ${LOCALUNAME}:node /${APPNAME}
+    
 EOF
 # -s /bin/bash  :ユーザーのデフォルトシェルを /bin/bash に設定
 # -m            :ユーザーホームディレクトリ (/home/{USER}) を作成
