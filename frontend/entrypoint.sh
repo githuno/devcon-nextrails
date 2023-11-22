@@ -3,6 +3,7 @@
 # set -e # エラーがでたらスクリプトを終了する
 
 echo -e "entry point.. ---> \\n\\n"
+echo -e "whoami : {`whoami`}\\n"
 
 # nextがcreate済みかをチェック
 if [ ! -e "next.config.js" ]; then
