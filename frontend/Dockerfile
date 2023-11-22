@@ -6,6 +6,9 @@ RUN apk update \
 
 ARG APPNAME CONTAINER_FRONT LOCALUNAME
 
+COPY ./${CONTAINER_FRONT}/entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+
 RUN <<EOF
    useradd -s /bin/bash -m ${LOCALUNAME}
    usermod -aG node ${LOCALUNAME}
@@ -16,11 +19,8 @@ EOF
 
 WORKDIR ${APPNAME}
 USER ${LOCALUNAME}
-
-# docker-compose.ymlから見た相対位置(ただし親階層には遡れない)
 COPY ./.bashrc /home/${LOCALUNAME}/
-COPY ./${CONTAINER_FRONT}/entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
+# compose.yamlから見た相対位置(ただし親階層には遡れない)
 
 ENTRYPOINT ["entrypoint.sh"]
 
