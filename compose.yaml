@@ -7,7 +7,7 @@ services:
     container_name: ${CONTAINER_FRONT}_${APPNAME}_${PNAME}
     build:
       context: .
-      dockerfile: ./${CONTAINER_FRONT}/node.Dockerfile
+      dockerfile: ./${CONTAINER_FRONT}/Dockerfile
       args:
         CONTAINER_FRONT: ${CONTAINER_FRONT}
         LOCALUID: ${LOCALUID}
@@ -31,8 +31,9 @@ services:
       - ${PORT_FRONT}
     networks:
       - nw
-    secrets:
-      - npmrc
+    # secrets:
+    #   - npmrc
+
   #--------------------------------------------------
   # backend: # サービス名は変数は使えない
   #   container_name: ${CONTAINER2}_${APPNAME}_${PNAME}
@@ -115,6 +116,6 @@ networks:
       config:
         - subnet: ${NSUBW}
           gateway: ${NGATE}
-secrets:
-  npmrc:
-    file: ./${CONTAINER_FRONT}/.npmrc
+# secrets:
+#   npmrc:
+#     file: ./${CONTAINER_FRONT}/.npmrc
