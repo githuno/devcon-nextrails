@@ -6,7 +6,7 @@ echo -e "script---> \\n︙\\n︙\\n"
 echo -e "whoami : {`whoami`}\\n"
 echo -e "${CONTAINER_FRONT} is moving...\\n"
 mv -f /tmp/${CONTAINER_FRONT}/* /tmp/${CONTAINER_FRONT}/.[^\.]* .
-rm -f /tmp/${CONTAINER_FRONT}
+rm -rf /tmp/${CONTAINER_FRONT}
 echo -e "${CONTAINER_FRONT} is moved\\n"
 echo -e "︙\\n︙\\n---> script done !! "
 
