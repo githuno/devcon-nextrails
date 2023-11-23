@@ -6,8 +6,8 @@ RUN apk update && apk --no-cache add \
     git vim nano sudo bash curl shadow dumb-init
 
 # ENV NODE_ENV production
+COPY ./${APPNAME}/${CONTAINER_FRONT} /tmp/
 WORKDIR /tmp/${CONTAINER_FRONT}
-COPY ./${APPNAME}/${CONTAINER_FRONT}/* .
 
 RUN <<EOF
     usermod -u 2000 node
@@ -19,7 +19,6 @@ RUN <<EOF
         env CI=true npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
     fi
     chown -R ${LOCALUID}:${LOCALGID} /tmp/${CONTAINER_FRONT}
-    chmod 774 /tmp/${CONTAINER_FRONT}
 EOF
 # -s /bin/bash  :ユーザーのデフォルトシェルを /bin/bash に設定
 # -m            :ユーザーホームディレクトリ (/home/{USER}) を作成

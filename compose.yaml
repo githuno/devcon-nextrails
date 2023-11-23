@@ -1,31 +1,33 @@
 version: "3"
-
 services:
-  #--------------------------------------------------
-  frontend: # サービス名は変数は使えない
+  # FRONT-------------------------------------------------->
+  frontend: # サービス名は変数指定はできない
     container_name: ${CONTAINER_FRONT}_${APPNAME}_${PNAME}
     build:
       context: ../ # ビルド時のセルフディレクトリ
       dockerfile: ./.devcontainer/${CONTAINER_FRONT}/Dockerfile
-      args: # ビルド時に使用する変数
+      args: # ビルド時に使用する変数（in Dockerfile）
         CONTAINER_FRONT: ${CONTAINER_FRONT}
         LOCALUID: ${LOCALUID}
         LOCALUNAME: ${LOCALUNAME}
         LOCALGID: ${LOCALGID}
         LOCALGNAME: ${LOCALGNAME}
         APPNAME: ${APPNAME}
-    volumes:
-      - ../${APPNAME}/${CONTAINER_FRONT}:/${CONTAINER_FRONT}
-    environment: # コンテナ内に引き継ぐ変数
+    environment: # コンテナ内に引き継ぐ変数（in entrypoint.sh）
       CONTAINER_FRONT: ${CONTAINER_FRONT}
       NGATE: ${NGATE}
       PORT_BACK: ${PORT_BACK}
       CONTAINER_BACK: ${CONTAINER_BACK}
-      CODESPACES: ${CODESPACES} # Codespace用
-      CODESPACE_NAME: ${CODESPACE_NAME} # Codespace用
-      GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN: ${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN} # Codespace用
-      GITHUB_TOKEN: ${GITHUB_TOKEN} # Codespace用
-    entrypoint: entrypoint.sh
+      # Codespaces専用変数---->
+      CODESPACES: ${CODESPACES}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      CODESPACE_NAME: ${CODESPACE_NAME}
+      GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN: ${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}
+      # <----Codespaces専用変数
+    volumes:
+      - ../${APPNAME}/${CONTAINER_FRONT}:/${CONTAINER_FRONT}
+    entrypoint: >
+      entrypoint.sh
     command: >  # PID1問題
       dumb-init /bin/sh
     tty: true
@@ -35,8 +37,9 @@ services:
       - nw
     # secrets:
     #   - npmrc
+  # <--------------------------------------------------FRONT
 
-  #--------------------------------------------------
+  # BACK-------------------------------------------------->
   # backend: # サービス名は変数は使えない
   #   container_name: ${CONTAINER2}_${APPNAME}_${PNAME}
   #   build:
@@ -78,10 +81,10 @@ services:
   #   networks:
   #     - nw
   # #--------------------------------------------------
-# RDB(cockroach)
-# STRAGE(minio)
-# REDIS()
-# WEB(nginx)
+  # RDB(cockroach)
+  # STRAGE(minio)
+  # REDIS()
+  # WEB(nginx)
 
 
   # https://qiita.com/taki_21/items/18a6c86f365545b940f3
