@@ -14,7 +14,6 @@ services:
         LOCALGNAME: ${LOCALGNAME}
         APPNAME: ${APPNAME}
     environment: # コンテナ内に引き継ぐ変数（in entrypoint.sh）
-      NEXT: /tmp/${CONTAINER_FRONT}/next.config.js
       CONTAINER_FRONT: ${CONTAINER_FRONT}
       NGATE: ${NGATE}
       PORT_BACK: ${PORT_BACK}

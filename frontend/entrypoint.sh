@@ -4,7 +4,6 @@ set -e # エラーがでたらスクリプトを終了する
 
 echo -e "script-------------> \\n︙\\n"
 echo -e "whoami : {`whoami`}\\n"
-echo -e "NEXT : {${NEXT}}\\n"
 
 # マウントによる上書きを避けるために一度tmpに入れたリソースを、ここで戻す
 if [ -e "/tmp/${CONTAINER_FRONT}" ]; then
