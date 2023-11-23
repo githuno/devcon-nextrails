@@ -1,12 +1,12 @@
 FROM node:lts-alpine
 
-ARG CONTAINER_FRONT LOCALUID LOCALUNAME LOCALGID LOCALGNAME 
+ARG APPNAME CONTAINER_FRONT LOCALUID LOCALUNAME LOCALGID LOCALGNAME 
 
 RUN apk update && apk --no-cache add \
     git vim nano sudo bash curl shadow dumb-init
 
 # ENV NODE_ENV production
-WORKDIR /${CONTAINER_FRONT}
+WORKDIR /tmp/${CONTAINER_FRONT}
 
 RUN <<EOF
     usermod -u 2000 node
@@ -18,14 +18,16 @@ RUN <<EOF
         env CI=true npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
     fi
     npm ci
-    chown -R ${LOCALUID}:${LOCALGID} /${CONTAINER_FRONT}
+    chown -R ${LOCALUID}:${LOCALGID} /tmp/${CONTAINER_FRONT}
+    chmod 774 /tmp/${CONTAINER_FRONT}
 EOF
 # -s /bin/bash  :ユーザーのデフォルトシェルを /bin/bash に設定
 # -m            :ユーザーホームディレクトリ (/home/{USER}) を作成
 # -aG           :ユーザーを指定したグループに追加
 COPY --chown=${LOCALUNAME}:${LOCALUNAME} \
     ./.devcontainer/.bashrc /home/${LOCALUNAME}/
-COPY --chown=${LOCALUNAME}:${LOCALUNAME} \
+COPY --chown=${LOCALUNAME}:${LOCALUNAME} --chmod=764 \
     ./.devcontainer/${CONTAINER_FRONT}/entrypoint.sh /usr/bin/
 
 USER ${LOCALUNAME}
+WORKDIR /${CONTAINER_FRONT}
