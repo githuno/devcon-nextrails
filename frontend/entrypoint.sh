@@ -5,15 +5,10 @@ set -e # エラーがでたらスクリプトを終了する
 echo -e "script-------------> \\n︙\\n"
 echo -e "whoami : {`whoami`}\\n"
 
-if [ -z "/tmp/${CONTAINER_FRONT}/" ]; then
-    echo -e "${CONTAINER_FRONT} is not copy\\n"
-else
-    echo -e "${CONTAINER_FRONT} is copying...\\n"
-    cp -rf /tmp/${CONTAINER_FRONT}/* .
-    echo -e "${CONTAINER_FRONT} is copyed\\n"
-fi
+echo -e "${CONTAINER_FRONT} is copying...\\n"
+cp -rf /tmp/${CONTAINER_FRONT}/* .
 
-echo -e "/tmp/${CONTAINER_FRONT} is removed\\n"
+echo -e "/tmp/${CONTAINER_FRONT} is removing\\n"
 rm -rf /tmp/${CONTAINER_FRONT}
 
 echo -e "npm installing\\n"
