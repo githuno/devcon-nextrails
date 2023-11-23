@@ -13,7 +13,6 @@ services:
         LOCALGID: ${LOCALGID}
         LOCALGNAME: ${LOCALGNAME}
         APPNAME: ${APPNAME}
-        NEXT: /tmp/${CONTAINER_FRONT}/next.config.js
     environment: # コンテナ内に引き継ぐ変数（in entrypoint.sh）
       NEXT: /tmp/${CONTAINER_FRONT}/next.config.js
       CONTAINER_FRONT: ${CONTAINER_FRONT}

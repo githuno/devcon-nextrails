@@ -1,12 +1,13 @@
 FROM node:lts-alpine
 
-ARG APPNAME CONTAINER_FRONT LOCALUID LOCALUNAME LOCALGID LOCALGNAME NEXT
+ARG APPNAME CONTAINER_FRONT LOCALUID LOCALUNAME LOCALGID LOCALGNAME
 
 RUN apk update && apk --no-cache add \
     git vim nano sudo bash curl shadow dumb-init
 
 # ENV NODE_ENV production
-COPY ./${APPNAME}/${CONTAINER_FRONT} /tmp/
+COPY ./${APPNAME}/${CONTAINER_FRONT} /tmp/${CONTAINER_FRONT}
+ARG NEXT=/tmp/${CONTAINER_FRONT}/next.config.js
 
 RUN <<EOF
     usermod -u 2000 node
