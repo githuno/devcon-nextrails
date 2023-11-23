@@ -8,6 +8,7 @@ RUN apk update && apk --no-cache add \
 # ENV NODE_ENV production
 COPY ./${APPNAME}/${CONTAINER_FRONT} /tmp/${CONTAINER_FRONT}
 ARG NEXT=/tmp/${CONTAINER_FRONT}/next.config.js
+ENV NEXT=${NEXT}
 
 RUN <<EOF
     usermod -u 2000 node
