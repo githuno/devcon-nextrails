@@ -7,7 +7,6 @@ RUN apk update && apk --no-cache add \
 
 # ENV NODE_ENV production
 COPY ./${APPNAME}/${CONTAINER_FRONT} /tmp/
-WORKDIR /tmp/${CONTAINER_FRONT}
 
 RUN <<EOF
     usermod -u 2000 node
@@ -15,8 +14,9 @@ RUN <<EOF
     groupadd --gid ${LOCALGID} ${LOCALGNAME}
     useradd -s /bin/bash -u ${LOCALUID} -g ${LOCALGID} -m ${LOCALUNAME}
     usermod -aG ${LOCALGNAME},node ${LOCALUNAME}
-    if [ ! -e "next.config.js" ]; then
-        env CI=true npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
+    if [ ! -e "/tmp/${CONTAINER_FRONT}/next.config.js" ]; then
+        env CI=true npx create-next-app /tmp/${CONTAINER_FRONT}/ \
+            --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
     fi
     chown -R ${LOCALUID}:${LOCALGID} /tmp/${CONTAINER_FRONT}
 EOF
