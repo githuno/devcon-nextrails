@@ -7,7 +7,7 @@ RUN apk update && apk --no-cache add \
 
 # ENV NODE_ENV production
 WORKDIR /tmp/${CONTAINER_FRONT}
-ADD ./${APPNAME}/${CONTAINER_FRONT}/* ./
+COPY ./${APPNAME}/${CONTAINER_FRONT}/* /${APPNAME}/.env ./
 
 RUN <<EOF
     usermod -u 2000 node
