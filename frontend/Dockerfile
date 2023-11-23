@@ -14,7 +14,7 @@ RUN <<EOF
     groupadd --gid ${LOCALGID} ${LOCALGNAME}
     useradd -s /bin/bash -u ${LOCALUID} -g ${LOCALGID} -m ${LOCALUNAME}
     usermod -aG ${LOCALGNAME},node ${LOCALUNAME}
-    if [ ! -e "next.config.js" ]; then
+    if [ ! -e "/${CONTAINER_FRONT}/next.config.js" ]; then
         env CI=true npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
     fi
     chown -R ${LOCALUID}:${LOCALGID} /tmp/${CONTAINER_FRONT}
