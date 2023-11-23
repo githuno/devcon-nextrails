@@ -17,7 +17,6 @@ RUN <<EOF
     if [ ! -e "next.config.js" ]; then
         env CI=true npx create-next-app . --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
     fi
-    npm ci
     chown -R ${LOCALUID}:${LOCALGID} /tmp/${CONTAINER_FRONT}
     chmod 774 /tmp/${CONTAINER_FRONT}
 EOF
