@@ -8,12 +8,13 @@ services:
       dockerfile: ./.devcontainer/${CONTAINER_FRONT}/Dockerfile
       args: # ビルド時に使用する変数（in Dockerfile）
         CONTAINER_FRONT: ${CONTAINER_FRONT}
-        APPNAME: ${APPNAME}
         LOCALUID: ${LOCALUID}
         LOCALUNAME: ${LOCALUNAME}
         LOCALGID: ${LOCALGID}
         LOCALGNAME: ${LOCALGNAME}
+        APPNAME: ${APPNAME}
     environment: # コンテナ内に引き継ぐ変数（in entrypoint.sh）
+      CONTAINER_FRONT: ${CONTAINER_FRONT}
       NGATE: ${NGATE}
       PORT_BACK: ${PORT_BACK}
       CONTAINER_BACK: ${CONTAINER_BACK}
@@ -27,7 +28,8 @@ services:
       - ../${APPNAME}/${CONTAINER_FRONT}:/${CONTAINER_FRONT}
     entrypoint: >
       entrypoint.sh
-    command: [ "dumb-init", "/bin/sh" ]
+    command: >  # PID1問題 # dumb-init /bin/sh
+      [ "dumb-init", "node" ]
     tty: true
     ports:
       - ${PORT_FRONT}
