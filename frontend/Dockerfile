@@ -6,7 +6,7 @@ WORKDIR /build/${CONTAINER_FRONT}
 
 RUN <<EOT
     if [ ! -e next.config.js ]; then
-        env CI=true npx create-next-app /tmp/${CONTAINER_FRONT} \
+        env CI=true npx create-next-app . \
             --ts --eslint --tailwind --src-dir --app --import-alias "@/*"
     fi
     npm ci
