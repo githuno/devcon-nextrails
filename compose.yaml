@@ -14,6 +14,7 @@ services:
         LOCALGID: ${LOCALGID}
         LOCALGNAME: ${LOCALGNAME}
     environment: # コンテナ内に引き継ぐ変数（in entrypoint.sh）
+      CONTAINER_FRONT: ${CONTAINER_FRONT}
       NGATE: ${NGATE}
       PORT_BACK: ${PORT_BACK}
       CONTAINER_BACK: ${CONTAINER_BACK}

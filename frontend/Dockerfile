@@ -21,14 +21,14 @@ RUN apk update && apk --no-cache add \
     git vim nano sudo bash curl shadow dumb-init
 
 COPY --chown=${LOCALUID}:${LOCALGID} --from=builder \
-    /build/${CONTAINER_FRONT}/node_modules /tmp/node_modules
+    /build/${CONTAINER_FRONT} /tmp/${CONTAINER_FRONT}
 
 RUN <<EOT
     usermod -u 2000 node && groupmod -g 2000 node
     groupadd -o --gid ${LOCALGID} ${LOCALGNAME}
     useradd -o -s /bin/bash -u ${LOCALUID} -g ${LOCALGID} -m ${LOCALUNAME}
     usermod -aG ${LOCALGNAME},node ${LOCALUNAME}
-    chown -R ${LOCALUID}:${LOCALGID} /tmp/node_modules
+    chown -R ${LOCALUID}:${LOCALGID} /tmp/${CONTAINER_FRONT}
 EOT
 
 COPY --chown=${LOCALUID}:${LOCALGID} ./.devcontainer/.bashrc /home/${LOCALUNAME}/
