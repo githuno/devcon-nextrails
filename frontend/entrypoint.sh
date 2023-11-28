@@ -10,7 +10,7 @@ echo -e "whoami : {`whoami`}\\n"
 # マウントによる上書きを避けるために一度tmpに入れたリソースを、ここで戻す
 if [ -e "/tmp/${CONTAINER_FRONT}" ]; then
     echo -e "/tmp/${CONTAINER_FRONT} is copying...\\n"
-    cp -rf /tmp/${CONTAINER_FRONT} ./${CONTAINER_FRONT}
+    cp -rf /tmp/${CONTAINER_FRONT}/* ./
 
     echo -e "/tmp/${CONTAINER_FRONT} is removing\\n"
     rm -rf /tmp/${CONTAINER_FRONT}
