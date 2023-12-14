@@ -31,7 +31,8 @@ RUN <<EOT
     chown -R ${LOCALUID}:${LOCALGID} /tmp/${CONTAINER_FRONT}
 EOT
 
-COPY --chown=${LOCALUID}:${LOCALGID} ./.devcontainer/.bashrc /home/${LOCALUNAME}/
+COPY --chown=${LOCALUID}:${LOCALGID} ./.devcontainer/.bashrc /tmp/
+# COPY --chown=${LOCALUID}:${LOCALGID} ./.devcontainer/.bashrc /home/${LOCALUNAME}/
 COPY --chown=${LOCALUID}:${LOCALGID} --chmod=764 ./.devcontainer/${CONTAINER_FRONT}/entrypoint.sh /usr/bin/
 
 USER ${LOCALUNAME}

@@ -1,8 +1,8 @@
 version: "3"
 services:
-  # FRONT-------------------------------------------------->
+  # FRONT---------------------------------------------------------------------->
   frontend: # サービス名は変数指定はできない
-    container_name: ${CONTAINER_FRONT}_${APPNAME}_${PNAME}
+    container_name: ${CONTAINER_FRONT}_${APPNAME}_${PJNAME}
     build:
       context: ../ # ビルド時のセルフディレクトリ
       dockerfile: ./.devcontainer/${CONTAINER_FRONT}/Dockerfile
@@ -36,11 +36,56 @@ services:
       - nw
     # secrets: # https://docs.docker.com/compose/use-secrets/
     #   - npmrc
-  # <--------------------------------------------------FRONT
+  # <----------------------------------------------------------------------FRONT
 
-  # BACK-------------------------------------------------->
+  # BACK----------------------------------------------------------------------->
+  backend: # サービス名は変数は使えない
+    container_name: ${CONTAINER_BACK}_${APPNAME}_${PJNAME}
+    build:
+      context: .
+      dockerfile: ./${CONTAINER_BACK}/Dockerfile
+      args: # Dockerfileに引き継ぐ変数
+        CONTAINER_BACK: ${CONTAINER_BACK}
+        RUBY_VERSION: ${RUBY_VERSION}
+        LOCALUID: ${LOCALUID}
+        LOCALUNAME: ${LOCALUNAME}
+        LOCALGID: ${LOCALGID}
+        LOCALGNAME: ${LOCALGNAME}
+        APPNAME: ${APPNAME}
+    volumes:
+      # - type: bind
+      #   source: ./${CONTAINER_BACK}
+      #   target: /${APPNAME}:rw
+      - ../${APPNAME}/${CONTAINER_BACK}:/${APPNAME}:rw
+    environment: # コンテナ内に引き継ぐ変数
+      TZ: ${TZ}
+      LANG: ${LANG}
+      RAILS_ENV: development
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PW: ${DB_PW}
+      NGATE: ${NGATE}
+      PORT1: ${PORT_FRONT}
+      CODESPACE_NAME: ${CODESPACE_NAME} # Codespace用
+      # MYPORT: ${PORT_BACK} # Codespace用
+      # CODESPACES: ${CODESPACES} # Codespace用
+      # GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN: ${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN} # Codespace用
+      # GITHUB_TOKEN: ${GITHUB_TOKEN} # Codespace用
+    entrypoint: >
+      entrypoint.sh
+    command: [ "dumb-init", "/bin/sh" ]
+    ports:
+      - ${PORT_BACK}
+    # depends_on:
+    #   - ${CONTAINER3}
+    tty: true # 追記
+    networks:
+      - nw
+  # <-----------------------------------------------------------------------BACK
+
+
   # backend: # サービス名は変数は使えない
-  #   container_name: ${CONTAINER2}_${APPNAME}_${PNAME}
+  #   container_name: ${CONTAINER2}_${APPNAME}_${PJNAME}
   #   build:
   #     context: .
   #     dockerfile: ./${CONTAINER2}/Dockerfile
@@ -89,7 +134,7 @@ services:
   # https://qiita.com/taki_21/items/18a6c86f365545b940f3
   # rdb: # サービス名は変数は使えない
   #   image: minio/minio:latest
-  #   container_name: ${CONTAINER3}_${APPNAME}_${PNAME}
+  #   container_name: ${CONTAINER3}_${APPNAME}_${PJNAME}
   #   ports:
   #     - "9000:9000"
   #     - "9001:9001" # コンソール用のポートフォワード設定

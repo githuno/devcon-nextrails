@@ -1,32 +1,43 @@
 #!/bin/sh
 set -e
 
-# 既存.bashrcがなければtmpからコピー
+# # 一時的なグループを作成
+# groupadd -g 11111 tmpgrp
+# # nodeユーザを一時的なグループに一旦所属させる
+# usermod -g tmpgrp node
+# # もともと所属していたnodeグループを削除
+# groupdel node
+# # ホストユーザのGIDと同じGIDでnode グループを作成
+# groupadd -g $LOCALGID node
+# # nodeユーザのGID をホストユーザのGIDに設定
+# usermod -g $LOCALGID node
+# # nodeユーザのUID をホストユーザのUIDに設定
+# usermod -g $LOCALUID node
+# # 一時的に作ったグループを削除
+# groupdel tmpgrp
+# su node
+
+# .bashrcがあるかチェック
 if [ ! -e "~/.bashrc" ]; then
     cp -f /tmp/.bashrc ~/
-    source ~/.bashrc
 fi
 
 # railsがnew済みかをチェック
 if [ ! -e "./config/routes.rb" ]; then
-    echo 'rails new APIモード を実行する'
-    cp /tmp/Gemfile /tmp/Gemfile.lock ${ROOT}
-    # --skip入れないとpgのgemないってエラーが出る
-    bundle install
-    rails new . --force --api --database=postgresql --skip-git --skip-bundle
-    cp -f /tmp/.gitignore ${ROOT}
-    cp -f /tmp/database.yml ${ROOT}/config/database.yml
-    gem update --system
-    bundle update --bundler
-    bundle install
-    rails db:create
-    echo '初期設定 success!!'
+  echo 'rails new APIモード を実行する'
+  cp /tmp/Gemfile /tmp/Gemfile.lock ${ROOT}
+  # --skip入れないとpgのgemないってエラーが出る
+  bundle install
+  rails new . --force --api --database=postgresql --skip-git --skip-bundle
+  cp -f /tmp/.gitignore ${ROOT}
+  cp -f /tmp/database.yml ${ROOT}/config/database.yml
+  bundle install
+  rails db:create
+  echo '初期設定 success!!'
 fi
 
 # Railsがインストール済かをチェック
 if ! rails -v; then
-    gem update --system
-    bundle update --bundler
     bundle install
     rails db:create
     if [ -e "db/migrate" ]; then

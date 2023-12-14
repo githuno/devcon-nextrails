@@ -7,6 +7,12 @@ echo -e "whoami : {`whoami`}\\n"
 # chown mounted volume❌権限なし
 # chown ${LOCALUID}:${LOCALGID} /${CONTAINER_FRONT}
 
+# 既存.bashrcがなければtmpからコピー(追加した)
+if [ ! -e "~/.bashrc" ]; then
+    cp -f /tmp/.bashrc ~/
+    source ~/.bashrc
+fi
+
 # マウントによる上書きを避けるために一度tmpに入れたリソースを、ここで戻す
 if [ -e "/tmp/${CONTAINER_FRONT}" ]; then
     echo -e "/tmp/${CONTAINER_FRONT} is copying...\\n"
