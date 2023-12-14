@@ -19,7 +19,8 @@
 Docker拡張のGUI操作で、各コンテナに「Attach shell」
 
 - ##### 各サーバーの立ち上げ
-backend: `rails s -e`
+backend: `rails s -e` または`rails s -b '0.0.0.0'`でバインドすること
+
 frontend: `yarn dev`
 
     各ポート番号に注意しながら、ブラウザで開いて起動を確認

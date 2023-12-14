@@ -44,7 +44,7 @@ services:
     build:
       context: .
       dockerfile: ./${CONTAINER_BACK}/Dockerfile
-      args: # Dockerfileに引き継ぐ変数
+      args: # ビルド時に使用する変数（in Dockerfile）
         CONTAINER_BACK: ${CONTAINER_BACK}
         RUBY_VERSION: ${RUBY_VERSION}
         LOCALUID: ${LOCALUID}
@@ -65,7 +65,7 @@ services:
       DB_USER: ${DB_USER}
       DB_PW: ${DB_PW}
       NGATE: ${NGATE}
-      PORT1: ${PORT_FRONT}
+      PORT_FRONT: ${PORT_FRONT}
       CODESPACE_NAME: ${CODESPACE_NAME} # Codespace用
       # MYPORT: ${PORT_BACK} # Codespace用
       # CODESPACES: ${CODESPACES} # Codespace用
@@ -76,11 +76,29 @@ services:
     command: [ "dumb-init", "/bin/sh" ]
     ports:
       - ${PORT_BACK}
-    # depends_on:
-    #   - ${CONTAINER3}
+    depends_on:
+      - ${CONTAINER_DB}
     tty: true # 追記
-    networks:
-      - nw
+    # networks:
+    #   - nw
+  db: # サービス名は変数は使えない
+    image: postgres:14.3-alpine
+    container_name: ${CONTAINER_DB}_${APPNAME}_${PJNAME}
+    environment:
+      - TZ=${TZ}
+      - PGTZ=${TZ}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PW}
+    volumes:
+      # - type: bind
+      #   source: ./${CONTAINER_DB}/data
+      #   target: /var/lib/postgresql/data 
+      - ../${APPNAME}/${CONTAINER_DB}/data:/var/lib/postgresql/data:rw
+      # memo:https://nishinatoshiharu.com/docker-volume-tutorial/
+    ports:
+      - ${PORT_DB}
+    # networks:
+    #   - nw
   # <-----------------------------------------------------------------------BACK
 
 
@@ -120,7 +138,7 @@ services:
   #   ports:
   #     - ${PORT2}
   #   depends_on:
-  #     - ${CONTAINER3}
+  #     - ${CONTAINER_DB}
   #   tty: true # 追記
   #   networks:
   #     - nw
@@ -134,7 +152,7 @@ services:
   # https://qiita.com/taki_21/items/18a6c86f365545b940f3
   # rdb: # サービス名は変数は使えない
   #   image: minio/minio:latest
-  #   container_name: ${CONTAINER3}_${APPNAME}_${PJNAME}
+  #   container_name: ${CONTAINER_DB}_${APPNAME}_${PJNAME}
   #   ports:
   #     - "9000:9000"
   #     - "9001:9001" # コンソール用のポートフォワード設定
@@ -146,7 +164,7 @@ services:
   #   entrypoint: sh
   #   command: -c "/opt/bin/minio server /export --address :9000 --console-address :9001"
   #   volumes:
-  #     - ../${APPNAME}/${CONTAINER3}/data:/export
+  #     - ../${APPNAME}/${CONTAINER_DB}/data:/export
   #   networks:
   #     - nw
   # web:
