@@ -1,42 +1,42 @@
 version: "3"
 services:
-  # FRONT---------------------------------------------------------------------->
-  frontend: # サービス名は変数指定はできない
-    container_name: ${CONTAINER_FRONT}_${APPNAME}_${PJNAME}
-    build:
-      context: ../ # ビルド時のセルフディレクトリ
-      dockerfile: ./.devcontainer/${CONTAINER_FRONT}/Dockerfile
-      args: # ビルド時に使用する変数（in Dockerfile）
-        CONTAINER_FRONT: ${CONTAINER_FRONT}
-        APPNAME: ${APPNAME}
-        LOCALUID: ${LOCALUID}
-        LOCALUNAME: ${LOCALUNAME}
-        LOCALGID: ${LOCALGID}
-        LOCALGNAME: ${LOCALGNAME}
-    environment: # コンテナ内に引き継ぐ変数（in entrypoint.sh）
-      CONTAINER_FRONT: ${CONTAINER_FRONT}
-      NGATE: ${NGATE}
-      PORT_BACK: ${PORT_BACK}
-      CONTAINER_BACK: ${CONTAINER_BACK}
-      # Codespaces専用変数---->
-      CODESPACES: ${CODESPACES}
-      GITHUB_TOKEN: ${GITHUB_TOKEN}
-      CODESPACE_NAME: ${CODESPACE_NAME}
-      GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN: ${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}
-      # <----Codespaces専用変数
-    volumes:
-      - ../${APPNAME}/${CONTAINER_FRONT}:/${CONTAINER_FRONT}
-    entrypoint: >
-      entrypoint.sh
-    command: [ "dumb-init", "/bin/sh" ]
-    tty: true
-    ports:
-      - ${PORT_FRONT}
-    networks:
-      - nw
-    # secrets: # https://docs.docker.com/compose/use-secrets/
-    #   - npmrc
-  # <----------------------------------------------------------------------FRONT
+  # # FRONT---------------------------------------------------------------------->
+  # frontend: # サービス名は変数指定はできない
+  #   container_name: ${CONTAINER_FRONT}_${APPNAME}_${PJNAME}
+  #   build:
+  #     context: ../ # ビルド時のセルフディレクトリ
+  #     dockerfile: ./.devcontainer/${CONTAINER_FRONT}/Dockerfile
+  #     args: # ビルド時に使用する変数（in Dockerfile）
+  #       CONTAINER_FRONT: ${CONTAINER_FRONT}
+  #       APPNAME: ${APPNAME}
+  #       LOCALUID: ${LOCALUID}
+  #       LOCALUNAME: ${LOCALUNAME}
+  #       LOCALGID: ${LOCALGID}
+  #       LOCALGNAME: ${LOCALGNAME}
+  #   environment: # コンテナ内に引き継ぐ変数（in entrypoint.sh）
+  #     CONTAINER_FRONT: ${CONTAINER_FRONT}
+  #     NGATE: ${NGATE}
+  #     PORT_BACK: ${PORT_BACK}
+  #     CONTAINER_BACK: ${CONTAINER_BACK}
+  #     # Codespaces専用変数---->
+  #     CODESPACES: ${CODESPACES}
+  #     GITHUB_TOKEN: ${GITHUB_TOKEN}
+  #     CODESPACE_NAME: ${CODESPACE_NAME}
+  #     GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN: ${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}
+  #     # <----Codespaces専用変数
+  #   volumes:
+  #     - ../${APPNAME}/${CONTAINER_FRONT}:/${CONTAINER_FRONT}
+  #   entrypoint: >
+  #     entrypoint.sh
+  #   command: [ "dumb-init", "/bin/sh" ]
+  #   tty: true
+  #   ports:
+  #     - ${PORT_FRONT}
+  #   networks:
+  #     - nw
+  #   # secrets: # https://docs.docker.com/compose/use-secrets/
+  #   #   - npmrc
+  # # <----------------------------------------------------------------------FRONT
 
   # BACK----------------------------------------------------------------------->
   backend: # サービス名は変数は使えない
