@@ -28,16 +28,18 @@ if ! rails -v; then
     gem update --system
     bundle update --bundler
     bundle install
-    rails db:create
     if [ -e "db/migrate" ]; then
         rails db:migrate
         rails db:seed
+    else
+        rails db:create
     fi
-
-    # master.key の再生成
-    rm -f config/master.key config/credentials.yml.enc # 既存keyの削除
-    rails credentials:edit # keyの作成
-    EDITOR=true rails credentials:edit # credentials.yml.enc の再作成
+    if [ ! -e "config/master.key" ]; then
+        # master.key の再生成
+        rm -f config/master.key config/credentials.yml.enc # 既存keyの削除
+        rails credentials:edit # keyの作成
+        EDITOR=true rails credentials:edit # credentials.yml.enc の再作成
+    fi
 fi
 echo "インストール success!!"
 

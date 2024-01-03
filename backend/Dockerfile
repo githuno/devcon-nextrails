@@ -15,17 +15,22 @@ RUN apk update && apk add \
     sqlite-dev postgresql-dev postgresql-client mysql-client \
     tzdata \
     nodejs \
-    git vim nano sudo bash curl shadow dumb-init
+    git vim nano sudo bash curl shadow dumb-init 
 
-# Tailscale
-RUN curl https://pkgs.tailscale.com/stable/ubuntu/focal.gpg | sudo apt-key add - \
-    && curl https://pkgs.tailscale.com/stable/ubuntu/focal.list | sudo tee /etc/apt/sources.list.d/tailscale.list \
-    && sudo apt-get update && sudo apt-get -y install tailscale
+# Tailscale (for Alpine : https://github.com/mvisonneau/docker-tailscale/blob/main/Dockerfile)
+ARG TARGETARCH VERSION=1.48.2
+RUN apk add --no-cache iptables iproute2 ca-certificates bash \
+  && apk add --no-cache --virtual=.install-deps curl tar \
+  && curl -sL "https://pkgs.tailscale.com/stable/tailscale_${VERSION}_${TARGETARCH}.tgz" \
+  | tar -zxf - -C /usr/local/bin --strip=1 tailscale_${VERSION}_${TARGETARCH}/tailscaled tailscale_${VERSION}_${TARGETARCH}/tailscale \
+  && apk del .install-deps
     # && sudo tailscale up --authkey ${TAILSCALE_KEY}
 
 # cockroachdb
 RUN curl --create-dirs -o $HOME/.postgresql/root.crt \
-    'https://cockroachlabs.cloud/clusters/37f989f0-20e5-4ff7-834b-9f3146527512/cert'
+    'https://cockroachlabs.cloud/clusters/37f989f0-20e5-4ff7-834b-9f3146527512/cert' \
+    # ccloud
+    && curl https://binaries.cockroachdb.com/ccloud/ccloud_linux-amd64_0.6.12.tar.gz | tar -xz && cp -i ccloud /usr/local/bin/
     
 WORKDIR /${APPNAME}
 
