@@ -16,6 +16,16 @@ RUN apk update && apk add \
     tzdata \
     nodejs \
     git vim nano sudo bash curl shadow dumb-init
+
+# Tailscale
+RUN curl https://pkgs.tailscale.com/stable/ubuntu/focal.gpg | sudo apt-key add - \
+    && curl https://pkgs.tailscale.com/stable/ubuntu/focal.list | sudo tee /etc/apt/sources.list.d/tailscale.list \
+    && sudo apt-get update && sudo apt-get -y install tailscale
+    # && sudo tailscale up --authkey ${TAILSCALE_KEY}
+
+# cockroachdb
+RUN curl --create-dirs -o $HOME/.postgresql/root.crt \
+    'https://cockroachlabs.cloud/clusters/37f989f0-20e5-4ff7-834b-9f3146527512/cert'
     
 WORKDIR /${APPNAME}
 
