@@ -18,12 +18,13 @@ RUN apk update && apk add \
     git vim nano sudo bash curl shadow dumb-init 
 
 # Tailscale (for Alpine : https://github.com/mvisonneau/docker-tailscale/blob/main/Dockerfile)
-ARG TARGETARCH VERSION=1.48.2
+ARG TARGETARCH VERSION=1.52.1
 RUN apk add --no-cache iptables iproute2 ca-certificates bash \
   && apk add --no-cache --virtual=.install-deps curl tar \
   && curl -sL "https://pkgs.tailscale.com/stable/tailscale_${VERSION}_${TARGETARCH}.tgz" \
   | tar -zxf - -C /usr/local/bin --strip=1 tailscale_${VERSION}_${TARGETARCH}/tailscaled tailscale_${VERSION}_${TARGETARCH}/tailscale \
-  && apk del .install-deps
+  && apk del .install-deps \
+  && mkdir -p /run/tailscale/ /var/lib/tailscale/ && chmod 1777 /run/tailscale/ /var/lib/tailscale/
     # && sudo tailscale up --authkey ${TAILSCALE_KEY}
 
 # cockroachdb
@@ -55,6 +56,9 @@ RUN <<EOT2
     chown -R ${LOCALUNAME}:${LOCALGNAME} /usr/local/
     chown -R ${LOCALUNAME}:${LOCALGNAME} /tmp/
 EOT2
+
+# tailscale
+RUN chown -R ${LOCALUNAME}:${LOCALGNAME} /var/lib/tailscale/
     
 USER ${LOCALUNAME}
 COPY --chmod=755 ./${CONTAINER_BACK}/entrypoint.sh /usr/bin/
