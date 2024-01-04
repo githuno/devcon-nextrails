@@ -24,8 +24,7 @@ RUN apk add --no-cache iptables iproute2 ca-certificates bash \
   && curl -sL "https://pkgs.tailscale.com/stable/tailscale_${VERSION}_${TARGETARCH}.tgz" \
   | tar -zxf - -C /usr/local/bin --strip=1 tailscale_${VERSION}_${TARGETARCH}/tailscaled tailscale_${VERSION}_${TARGETARCH}/tailscale \
   && apk del .install-deps \
-  && mkdir -p /run/tailscale/ /var/lib/tailscale/ && chmod 1777 /run/tailscale/ /var/lib/tailscale/
-    # && sudo tailscale up --authkey ${TAILSCALE_KEY}
+  && mkdir -p /run/tailscale/ /var/lib/tailscale/ && chmod 1777 /run/tailscale/ /var/lib/tailscale/ 
 
 # cockroachdb
 RUN curl --create-dirs -o $HOME/.postgresql/root.crt \

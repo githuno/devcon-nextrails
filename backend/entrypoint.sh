@@ -20,7 +20,7 @@ if [ ! -e "./config/routes.rb" ]; then
     bundle update --bundler
     bundle install
     rails db:create
-    echo '初期設定 success!!'
+    echo '>> rails new success!!'
 fi
 
 # Railsがインストール済かをチェック
@@ -28,20 +28,23 @@ if ! rails -v; then
     gem update --system
     bundle update --bundler
     bundle install
+    echo ">> bundle install success!!"
     if [ -e "db/migrate" ]; then
         rails db:migrate
         rails db:seed
+        echo ">> db:migrate success!!"
     else
         rails db:create
+        echo ">> db:create success!!"
     fi
     if [ ! -e "config/master.key" ]; then
         # master.key の再生成
         rm -f config/master.key config/credentials.yml.enc # 既存keyの削除
         rails credentials:edit # keyの作成
         EDITOR=true rails credentials:edit # credentials.yml.enc の再作成
+        echo ">> master.key created!!"
     fi
 fi
-echo "インストール success!!"
 
 # Remove a potentially pre-existing server.pid for Rails.
 rm -f ${ROOT}/tmp/pids/server.pid
@@ -50,6 +53,10 @@ rm -f ${ROOT}/tmp/pids/server.pid
 # サーバーが再起動できないことがあります。そのため、
 # サーバーを再起動する前に ${ROOT}/tmp/pids/server.pid ファイルを
 # 削除することで、問題を解決することができます。
+
+# tailscale
+nohup tailscaled --tun=userspace-networking --socks5-server=localhost:1055 --outbound-http-proxy-listen=localhost:1055 > /dev/null 2>&1 &
+echo ">> tailscaled.. success!!"
 
 # Then exec the container's main process (what's set as CMD in the Dockerfile).
 exec "$@"
